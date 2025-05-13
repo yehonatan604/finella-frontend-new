@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { entitiesActions } from "../../Core/store/entitiesSlice";
 import { defaultPageSize, paginatedRows } from "../../Common/helpers/paginationHelpers";
 import { balanceEntryCols } from "../data/balanceEntryCols";
+import { TEntity } from "../../Common/types/TEntity";
 
 const useBalanceEntry = () => {
     const { user } = useAuth();
@@ -51,7 +52,7 @@ const useBalanceEntry = () => {
 
                 await sendApiRequest(`/balance-entry`, HTTPMethodTypes.PUT, finalData);
 
-                dispatch(entitiesActions.updateEntityItem({ type: "balanceEntries", item: finalData, id: data._id! }));
+                dispatch(entitiesActions.updateEntityItem({ type: "balanceEntries", item: finalData as TEntity, id: data._id! }));
                 toastify.success("Balance Entry updated successfully");
             } catch (error) {
                 console.log(error);

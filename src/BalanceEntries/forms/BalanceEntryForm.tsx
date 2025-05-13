@@ -25,7 +25,7 @@ const BalanceEntryForm = (props: BalanceEntryFormProps) => {
   const formMethods = useForm<TBalanceEntry>({
     defaultValues: bEntry
       ? { ...bEntry, date: new Date(bEntry.date).toISOString().split("T")[0] }
-      : addBalanceEntryFormDefault(user._id),
+      : addBalanceEntryFormDefault(user?._id + ""),
     resolver: joiResolver(balanceEntrySchema),
   });
 
@@ -125,7 +125,7 @@ const BalanceEntryForm = (props: BalanceEntryFormProps) => {
                           ...bEntry,
                           date: new Date(bEntry.date).toISOString().split("T")[0],
                         }
-                      : addBalanceEntryFormDefault(user._id)
+                      : addBalanceEntryFormDefault(user?._id + "")
                   );
                 }}
               />
