@@ -168,6 +168,7 @@ const NoteForm = (props: NoteFormProps) => {
                 onReset={() => {
                   reset(note ?? addNoteFormDefault(user?._id + ""));
                 }}
+                actionButtonText={note ? "Update" : "Create"}
               />
             </Box>
           </form>

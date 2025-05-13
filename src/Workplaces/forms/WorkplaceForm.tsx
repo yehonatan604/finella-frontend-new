@@ -1,4 +1,4 @@
-import { Box, Button, Container, Divider, Paper } from "@mui/material";
+import { Box, Container, Divider, Paper } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { workplaceSchema } from "../validations/workplace.schema";
@@ -9,6 +9,7 @@ import FormValidationMessage from "../../Common/components/form/FormValidationMe
 import FormField from "../../Common/components/form/FormField";
 import useTheme from "../../Common/hooks/useTheme";
 import { DateTime } from "luxon";
+import FormButtons from "../../Common/components/form/FormButtons";
 
 const WorkplaceForm = ({
   setIsDialogOpen,
@@ -275,29 +276,13 @@ const WorkplaceForm = ({
             <FormValidationMessage isValid={isValid} />
 
             <Box sx={{ display: "flex", gap: 2 }}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-                sx={{ fontSize: "1.2rem", py: 1 }}
-                disabled={!isValid}
-              >
-                {workplace ? "Update" : "Add"}
-              </Button>
-
-              <Button
-                type="reset"
-                variant="contained"
-                color="error"
-                fullWidth
-                sx={{ fontSize: "1.2rem", py: 1 }}
-                onClick={() => {
-                  reset(workplace ?? addWorkplaceFormDefault(user?._id + ""));
-                }}
-              >
-                Reset
-              </Button>
+              <FormButtons
+                isValid={isValid}
+                onReset={() =>
+                  reset(workplace ?? addWorkplaceFormDefault(user?._id + ""))
+                }
+                actionButtonText={workplace ? "Update" : "Add"}
+              />
             </Box>
           </form>
         </FormProvider>

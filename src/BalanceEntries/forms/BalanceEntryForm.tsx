@@ -119,15 +119,9 @@ const BalanceEntryForm = (props: BalanceEntryFormProps) => {
               <FormButtons
                 isValid={isValid}
                 onReset={() => {
-                  reset(
-                    bEntry
-                      ? {
-                          ...bEntry,
-                          date: new Date(bEntry.date).toISOString().split("T")[0],
-                        }
-                      : addBalanceEntryFormDefault(user?._id + "")
-                  );
+                  reset(bEntry ?? addBalanceEntryFormDefault(user?._id + ""));
                 }}
+                actionButtonText={bEntry ? "Update" : "Add"}
               />
             </Box>
           </form>

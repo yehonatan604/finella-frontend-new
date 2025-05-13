@@ -306,6 +306,7 @@ const ToDoForm = ({
                       : setIsDialogOpen;
                   setDialog!(false);
                 }}
+                actionButtonText={toDo ? "Update" : "Create"}
               />
             </Box>
           </form>

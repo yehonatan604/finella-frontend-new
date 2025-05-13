@@ -18,6 +18,7 @@ import { salarySchema } from "../validations/salary.schema";
 import FormField from "../../Common/components/form/FormField";
 import useTheme from "../../Common/hooks/useTheme";
 import { DateTime } from "luxon";
+import FormButtons from "../../Common/components/form/FormButtons";
 
 const SalaryForm = ({
   setIsDialogOpen,
@@ -291,29 +292,13 @@ const SalaryForm = ({
               {salaryHours.length > 0 && <Divider sx={{ my: 2, background: "silver" }} />}
 
               <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  sx={{ fontSize: "1.2rem", py: 1 }}
-                  disabled={!isValid}
-                >
-                  {salary ? "Update" : "Add"}
-                </Button>
-
-                <Button
-                  type="reset"
-                  variant="contained"
-                  color="error"
-                  fullWidth
-                  sx={{ fontSize: "1.2rem", py: 1 }}
-                  onClick={() => {
+                <FormButtons
+                  isValid={isValid}
+                  onReset={() => {
                     reset(salary ?? addSalaryFormDefault(user?._id || ""));
                   }}
-                >
-                  Reset
-                </Button>
+                  actionButtonText={salary ? "Update" : "Add"}
+                />
               </Box>
             </form>
           </FormProvider>
