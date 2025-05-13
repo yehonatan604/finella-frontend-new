@@ -20,7 +20,6 @@ import FormDialog from "../../Common/components/dialogs/FormDialog";
 import NoteForm from "../forms/Note.form";
 import { TNoteAutomation } from "../types/TNoteAutomation";
 import ShowInactiveCheckbox from "../../Common/components/ShowInactiveCheckbox";
-import { TDbItem } from "../../Common/types/TDbItem";
 
 const NoteAutomationPage = () => {
   const {
@@ -34,11 +33,11 @@ const NoteAutomationPage = () => {
   } = useNoteAutomation();
   const { mode } = useTheme();
 
-  const [data, setData] = useState<TNoteAutomation>([]);
+  const [data, setData] = useState<TNoteAutomation[]>([]);
   const [showInactive, setShowInactive] = useState(true);
 
   useEffect(() => {
-    setData(noteAutomations);
+    setData(noteAutomations || []);
   }, [noteAutomations]);
 
   return (
@@ -90,7 +89,7 @@ const NoteAutomationPage = () => {
                           : "Select a Note"
                       }
                       onChange={(e) => {
-                        setData((prev: TDbItem[]) =>
+                        setData((prev: TNoteAutomation[]) =>
                           prev.map((note) =>
                             note._id === automation._id
                               ? { ...note, noteId: e.target.value }
@@ -144,7 +143,7 @@ const NoteAutomationPage = () => {
                         const utcString =
                           newLocal.toUTC().toISO({ suppressMilliseconds: true }) || "";
 
-                        setData((prev: TDbItem[]) =>
+                        setData((prev: TNoteAutomation[]) =>
                           prev.map((note) =>
                             note._id === automation._id
                               ? { ...note, dateTime: utcString }
@@ -162,7 +161,7 @@ const NoteAutomationPage = () => {
                       sx={{ minWidth: 150 }}
                       label="Repeat"
                       onChange={(e) => {
-                        setData((prev: TDbItem[]) =>
+                        setData((prev: TNoteAutomation[]) =>
                           prev.map((note) =>
                             note._id === automation._id
                               ? { ...note, repeat: e.target.value }
@@ -185,7 +184,7 @@ const NoteAutomationPage = () => {
                       defaultValue={automation.notes || ""}
                       sx={{ minWidth: 300 }}
                       onChange={(e) => {
-                        setData((prev: TDbItem[]) =>
+                        setData((prev: TNoteAutomation[]) =>
                           prev.map((note) =>
                             note._id === automation._id
                               ? { ...note, notes: e.target.value }
@@ -195,7 +194,7 @@ const NoteAutomationPage = () => {
                       }}
                       slotProps={{
                         inputLabel: {
-                          shrink: automation.notes,
+                          shrink: automation.notes ? true : false,
                         },
                       }}
                     />
@@ -203,7 +202,7 @@ const NoteAutomationPage = () => {
                     <Switch
                       defaultChecked={automation.status === "active"}
                       onChange={() => {
-                        setData((prev: TDbItem[]) =>
+                        setData((prev: TNoteAutomation[]) =>
                           prev.map((note) =>
                             note._id === automation._id
                               ? {
@@ -232,7 +231,7 @@ const NoteAutomationPage = () => {
                     <IconButton
                       size="small"
                       onClick={() => {
-                        setData((prev: TDbItem[]) =>
+                        setData((prev: TNoteAutomation[]) =>
                           prev.filter((note) => note._id !== automation._id)
                         );
                       }}

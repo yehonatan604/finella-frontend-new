@@ -32,10 +32,10 @@ const NoteForm = (props: NoteFormProps) => {
     defaultValues: note
       ? {
           ...note,
-          userId: user._id,
+          userId: user?._id,
           date: new Date(note.date).toISOString().split("T")[0],
         }
-      : addNoteFormDefault(user._id),
+      : addNoteFormDefault(user?._id + ""),
     resolver: joiResolver(noteSchema),
   });
 
@@ -166,7 +166,7 @@ const NoteForm = (props: NoteFormProps) => {
               <FormButtons
                 isValid={isValid}
                 onReset={() => {
-                  reset(note ?? addNoteFormDefault(user._id));
+                  reset(note ?? addNoteFormDefault(user?._id + ""));
                 }}
               />
             </Box>

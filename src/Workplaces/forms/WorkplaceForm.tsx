@@ -29,7 +29,7 @@ const WorkplaceForm = ({
             ? new Date(workplace.endDate).toISOString().split("T")[0]
             : "",
         }
-      : addWorkplaceFormDefault(user._id),
+      : addWorkplaceFormDefault(user?._id + ""),
     resolver: joiResolver(workplaceSchema),
   });
 
@@ -293,7 +293,7 @@ const WorkplaceForm = ({
                 fullWidth
                 sx={{ fontSize: "1.2rem", py: 1 }}
                 onClick={() => {
-                  reset(workplace ?? addWorkplaceFormDefault(user?._id));
+                  reset(workplace ?? addWorkplaceFormDefault(user?._id + ""));
                 }}
               >
                 Reset
