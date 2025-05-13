@@ -5,6 +5,7 @@ import { socketActions } from "../../Core/store/socketSlice";
 import { TUser } from "../../Auth/types/TUser";
 import { entitiesActions } from "../../Core/store/entitiesSlice";
 import { question } from "../utilities/question";
+import { TEntity } from "../types/TEntity";
 
 const useSocket = (user: TUser) => {
     const dispatch = useDispatch();
@@ -25,14 +26,14 @@ const useSocket = (user: TUser) => {
                     entitiesActions.updateEntityItem({
                         type: "notes",
                         id: args.noteId,
-                        item: { ...note, noteStatus: "READ" },
+                        item: { ...note, noteStatus: "READ" } as TEntity,
                     });
                 }
             );
             dispatch(entitiesActions.updateEntityItem({
                 type: "todos",
                 id: args.id,
-                item: { ...todo, todoStatus: "FAILED" },
+                item: { ...todo, todoStatus: "FAILED" } as TEntity,
             }));
         }, [dispatch, notes, todos]
     );
@@ -51,7 +52,7 @@ const useSocket = (user: TUser) => {
                 entitiesActions.updateEntityItem({
                     type: "notes",
                     id: args.noteId,
-                    item: { ...note, noteStatus: "READ" },
+                    item: { ...note, noteStatus: "READ" } as TEntity,
                 });
             }
         );

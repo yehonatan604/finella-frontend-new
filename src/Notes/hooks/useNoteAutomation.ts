@@ -109,7 +109,7 @@ const useNoteAutomation = () => {
                     dispatch(entitiesActions.updateEntityItem({
                         type: "noteAutomations",
                         item: converted,
-                        id: converted._id,
+                        id: converted._id + "",
                     }));
                 }
             });
