@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import AddchartIcon from "@mui/icons-material/Addchart";
 import { exportDataToExcel } from "../../helpers/exportDataToExcel";
 import { exportDataToPDF } from "../../helpers/exportDataToPDF";
 
@@ -48,11 +48,11 @@ const PageButtons = (props: PageButtonsProps) => {
         <Button
           variant="contained"
           color="secondary"
-          sx={{ mt: 2, ml: 2 }}
-          startIcon={<AutoFixHighIcon />}
+          sx={{ mt: 2, ml: 2, color: "white" }}
+          startIcon={<AddchartIcon />}
           onClick={openCharts}
         >
-          Create Report
+          Create Charts
         </Button>
       )}
     </Box>
