@@ -11,7 +11,7 @@ const Page = ({
   width?: string;
 }) => {
   return (
-    <>
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", p: 3 }}>
       <Typography
         variant="h3"
         fontWeight="bold"
@@ -31,7 +31,7 @@ const Page = ({
       >
         {children}
       </Box>
-    </>
+    </Box>
   );
 };
 

@@ -9,10 +9,8 @@ import { TEntity } from "../types/TEntity";
 
 const useSocket = (user: TUser) => {
     const dispatch = useDispatch();
-    const {
-        socketSlice: { socket },
-        entitiesSlice: { notes, todos },
-    } = useSelector((state: TRootState) => state);
+    const { socket } = useSelector((state: TRootState) => state.socketSlice);
+    const { notes, todos } = useSelector((state: TRootState) => state.entitiesSlice);
 
     const todoFailed = useCallback(
         async (args: { title: string; content: string; id: string, noteId: string }) => {

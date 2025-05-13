@@ -65,6 +65,11 @@ const LeftNavigation = () => {
     setToolModals((prev) => ({ ...prev, [tool]: !prev[tool] }));
   };
 
+  const handleLogout = () => {
+    logout();
+    handleClose();
+  };
+
   const gradientBackground =
     mode === "dark"
       ? "linear-gradient(180deg, #1e293b 0%, #334155 100%)"
@@ -126,8 +131,8 @@ const LeftNavigation = () => {
                 width: "inherit",
               }}
             >
-              <IconButton sx={{ color: "white" }}>
-                <HomeIcon onClick={() => nav("/")} />
+              <IconButton sx={{ color: "white" }} onClick={() => nav("/")}>
+                <HomeIcon />
               </IconButton>
               <IconButton sx={{ color: "white" }} onClick={handleClick}>
                 <MenuIcon />
@@ -146,28 +151,20 @@ const LeftNavigation = () => {
                   horizontal: "left",
                 }}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem
-                  onClick={() => {
-                    logout();
-                    handleClose();
-                  }}
-                >
-                  Logout
+                <MenuItem onClick={handleClose}>
+                  <Link to={"/profile"}>Profile</Link>
                 </MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 <MenuItem onClick={handleClose}>
                   <Link to={"/about"}>About</Link>
                 </MenuItem>
               </Menu>
 
-              <IconButton>
+              <IconButton onClick={() => setTheme(mode === "dark" ? "light" : "dark")}>
                 {mode === "dark" ? (
-                  <LightModeRoundedIcon onClick={() => setTheme("light")} />
+                  <LightModeRoundedIcon sx={{ color: "white" }} />
                 ) : (
-                  <DarkModeRoundedIcon
-                    onClick={() => setTheme("dark")}
-                    sx={{ color: "white" }}
-                  />
+                  <DarkModeRoundedIcon sx={{ color: "text.standard" }} />
                 )}
               </IconButton>
             </CenterBox>

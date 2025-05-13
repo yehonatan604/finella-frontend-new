@@ -12,7 +12,7 @@ type FormFieldProps = {
   width?: string;
   selectArray?: string[] | number[];
   defaultValue?: string | number;
-  value?: string | number;
+  value?: string | number | undefined | Date;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   sx?: object;

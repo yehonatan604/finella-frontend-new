@@ -7,6 +7,6 @@ export type TUser = TDbItem & {
         last: string;
     }
     password: string;
-    dob: Date
+    dob: string;
     workPlaces: string[];
 } 

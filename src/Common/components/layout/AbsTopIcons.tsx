@@ -20,19 +20,11 @@ export const AbsTopIcons = ({ hideHome = false }: { hideHome?: boolean }) => {
         alignItems: "center",
       }}
     >
-      <IconButton>
+      <IconButton onClick={() => setTheme(mode === "dark" ? "light" : "dark")}>
         {mode === "dark" ? (
-          <LightModeRoundedIcon
-            onClick={() => setTheme("light")}
-            sx={{
-              color: "white",
-            }}
-          />
+          <LightModeRoundedIcon sx={{ color: "white" }} />
         ) : (
-          <DarkModeRoundedIcon
-            onClick={() => setTheme("dark")}
-            sx={{ color: "text.standard" }}
-          />
+          <DarkModeRoundedIcon sx={{ color: "text.standard" }} />
         )}
       </IconButton>
 

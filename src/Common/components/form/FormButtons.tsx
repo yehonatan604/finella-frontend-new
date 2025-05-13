@@ -3,10 +3,11 @@ import { Button } from "@mui/material";
 type FormButtonsProps = {
   isValid: boolean;
   onReset: () => void;
+  actionButtonText?: string;
 };
 
 const FormButtons = (props: FormButtonsProps) => {
-  const { isValid, onReset } = props;
+  const { isValid, onReset, actionButtonText = "Add" } = props;
   return (
     <>
       <Button
@@ -17,7 +18,7 @@ const FormButtons = (props: FormButtonsProps) => {
         sx={{ fontSize: "1.2rem" }}
         disabled={!isValid}
       >
-        Add
+        {actionButtonText}
       </Button>
 
       <Button

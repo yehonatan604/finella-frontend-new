@@ -8,11 +8,12 @@ import { toastify } from "../../Common/utilities/toast";
 import { alert } from "../../Common/utilities/alert";
 import { AxiosError } from "axios";
 import useSocket from "../../Common/hooks/useSocket";
+import { TUser } from "../types/TUser";
 
 const useAuth = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const { user, role } = useSelector((state: TRootState) => state.authSlice);
-    const { POST, GET } = HTTPMethodTypes;
+    const { POST, GET, PUT } = HTTPMethodTypes;
     const dispatch = useDispatch();
     useSocket(user!);
 
@@ -83,6 +84,27 @@ const useAuth = () => {
         }
     }, [GET, dispatch, logout]);
 
+    const updateUser = useCallback(async (user: TUser) => {
+        setLoading(true);
+        try {
+            const response = await sendApiRequest("/auth", PUT, user);
+            if (response) {
+                dispatch(authActions.setUser(user));
+                toastify.success("User updated successfully!");
+            }
+        } catch (err) {
+            const error = err as AxiosError;
+            console.log(error);
+            alert(
+                "Update Failed",
+                error?.response?.data + "",
+                "error",
+            );
+        } finally {
+            setLoading(false);
+        }
+    }, [PUT, dispatch]);
+
     return {
         user,
         role,
@@ -90,7 +112,8 @@ const useAuth = () => {
         signup,
         login,
         logout,
-        loginByToken
+        loginByToken,
+        updateUser,
     };
 };
 
