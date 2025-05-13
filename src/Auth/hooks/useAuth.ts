@@ -9,11 +9,12 @@ import { alert } from "../../Common/utilities/alert";
 import { AxiosError } from "axios";
 import useSocket from "../../Common/hooks/useSocket";
 import { TUser } from "../types/TUser";
+import { TChangePassword } from "../types/TChangePassword";
 
 const useAuth = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const { user, role } = useSelector((state: TRootState) => state.authSlice);
-    const { POST, GET, PUT } = HTTPMethodTypes;
+    const { POST, GET, PUT, PATCH } = HTTPMethodTypes;
     const dispatch = useDispatch();
     useSocket(user!);
 
@@ -105,6 +106,26 @@ const useAuth = () => {
         }
     }, [PUT, dispatch]);
 
+    const changePassword = useCallback(async (data: TChangePassword) => {
+        setLoading(true);
+        try {
+            const response = await sendApiRequest("/auth/change-password", PATCH, data);
+            if (response) {
+                toastify.success("Password changed successfully!");
+            }
+        } catch (err) {
+            const error = err as AxiosError;
+            console.log(error);
+            alert(
+                "Change Password Failed",
+                error?.response?.data + "",
+                "error",
+            );
+        } finally {
+            setLoading(false);
+        }
+    }, [PATCH]);
+
     return {
         user,
         role,
@@ -114,6 +135,7 @@ const useAuth = () => {
         logout,
         loginByToken,
         updateUser,
+        changePassword,
     };
 };
 

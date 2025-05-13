@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button, Divider } from "@mui/material";
 import Page from "../../Common/components/layout/Page";
 import FormField from "../../Common/components/form/FormField";
 import { FormProvider, useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import useAuth from "../hooks/useAuth";
 import { DateTime } from "luxon";
 import useTheme from "../../Common/hooks/useTheme";
 import { TUser } from "../types/TUser";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
   const { user, updateUser } = useAuth();
@@ -14,6 +15,7 @@ const ProfilePage = () => {
   const formMethods = useForm<TUser>({
     defaultValues: { ...user!, dob: user?.dob.split("T")[0] },
   });
+  const nav = useNavigate();
 
   const {
     handleSubmit,
@@ -106,6 +108,16 @@ const ProfilePage = () => {
               />
             </Box>
           </form>
+          <Divider sx={{ width: "100%", mt: 2 }} />
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ fontSize: "1.2rem", mt: 2 }}
+            onClick={() => nav("/profile/change-password")}
+          >
+            Change Password
+          </Button>
         </FormProvider>
       </Box>
     </Page>

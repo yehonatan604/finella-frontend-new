@@ -164,7 +164,7 @@ const LeftNavigation = () => {
                 {mode === "dark" ? (
                   <LightModeRoundedIcon sx={{ color: "white" }} />
                 ) : (
-                  <DarkModeRoundedIcon sx={{ color: "text.standard" }} />
+                  <DarkModeRoundedIcon sx={{ color: "white" }} />
                 )}
               </IconButton>
             </CenterBox>

@@ -16,6 +16,7 @@ import TodosBoard from "../../Todos/pages/ToDoBoard.page";
 import AboutPage from "../../Common/pages/About.page";
 import BalanceEntriesPage from "../../BalanceEntries/pages/BalanceEntries.page";
 import ProfilePage from "../../Auth/pages/Profile.page";
+import ChangePasswordPage from "../../Auth/pages/ChangePassword.page";
 
 const AppRouter = () => {
   const { loginByToken } = useAuth();
@@ -42,6 +43,7 @@ const AppRouter = () => {
 
       <Route path="/profile" element={<RouteGuard isLoggedIn />}>
         <Route index element={<ProfilePage />} />
+        <Route path="change-password" element={<ChangePasswordPage />} />
       </Route>
 
       <Route path="/records" element={<RouteGuard isLoggedIn />}>
