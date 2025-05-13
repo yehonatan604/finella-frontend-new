@@ -6,7 +6,7 @@ import { TFormErrorMessage } from "../../types/TFormErrorMessage";
 type FormFieldProps = {
   label: string;
   name: string;
-  setValue?: (value) => void;
+  setValue?: (value: unknown) => void;
   type?: string;
   required?: boolean;
   width?: string;
@@ -57,7 +57,16 @@ const FormField = (props: FormFieldProps) => {
       variant="outlined"
       fullWidth
       sx={{ mb: 2, width, ...sx }}
-      error={!!errors?.[name.split(".")[0] as KeyOfError]?.[name.split(".")[1] || ""]}
+      error={
+        !!(
+          (errors as Record<string, unknown>)?.[name.split(".")[0]] &&
+          (name.split(".")[1]
+            ? (errors as Record<string, TFormErrorMessage>)?.[name.split(".")[0]]?.[
+                name.split(".")[1]
+              ]
+            : true)
+        )
+      }
       helperText={
         (errors?.[name.split(".")[0] as KeyOfError] as TFormErrorMessage)?.[
           name.split(".")[1] || ""
@@ -65,7 +74,11 @@ const FormField = (props: FormFieldProps) => {
       }
       slotProps={{ inputLabel: { shrink: true } }}
       color={
-        errors?.[name.split(".")[0] as KeyOfError]?.[name.split(".")[1] || ""]
+        typeof errors?.[name.split(".")[0] as KeyOfError] === "object" &&
+        errors?.[name.split(".")[0] as KeyOfError] &&
+        (errors[name.split(".")[0] as KeyOfError] as Record<string, unknown>)[
+          name.split(".")[1] || ""
+        ]
           ? "error"
           : "primary"
       }
@@ -96,7 +109,17 @@ const FormField = (props: FormFieldProps) => {
       sx={{ mb: 2, width, ...sx }}
       multiline={multiline}
       rows={rows}
-      error={!!errors?.[name.split(".")[0] as KeyOfError]?.[name.split(".")[1] || ""]}
+      error={
+        !!(
+          errors?.[name.split(".")[0] as KeyOfError] &&
+          typeof errors[name.split(".")[0] as KeyOfError] === "object" &&
+          (name.split(".")[1]
+            ? (errors[name.split(".")[0] as KeyOfError] as Record<string, unknown>)[
+                name.split(".")[1]
+              ]
+            : true)
+        )
+      }
       helperText={
         (errors?.[name.split(".")[0] as KeyOfError] as TFormErrorMessage)?.[
           name.split(".")[1] || ""
@@ -104,7 +127,9 @@ const FormField = (props: FormFieldProps) => {
       }
       slotProps={{ inputLabel: { shrink: true } }}
       color={
-        errors?.[name.split(".")[0] as KeyOfError]?.[name.split(".")[1] || ""]
+        (errors?.[name.split(".")[0] as KeyOfError] as Record<string, unknown>)?.[
+          name.split(".")[1] || ""
+        ]
           ? "error"
           : "primary"
       }

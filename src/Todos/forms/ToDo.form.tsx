@@ -38,7 +38,7 @@ const ToDoForm = ({
           startDate: new Date(toDo.startDate).toISOString().split("T")[0],
           endDate: new Date(toDo.endDate).toISOString().split("T")[0],
         }
-      : addToDoFormDefault(user?._id),
+      : addToDoFormDefault(user?._id + ""),
     resolver: joiResolver(todoSchema),
   });
 
@@ -183,7 +183,7 @@ const ToDoForm = ({
                     gap: 2,
                   }}
                 >
-                  {watch("tasks")!.map((task, index) => (
+                  {watch("tasks")!.map((_, index) => (
                     <Box
                       key={index}
                       sx={{
@@ -299,7 +299,7 @@ const ToDoForm = ({
               <FormButtons
                 isValid={isValid}
                 onReset={() => {
-                  reset(toDo ? toDo : addToDoFormDefault(user._id));
+                  reset(toDo ? toDo : addToDoFormDefault(user?._id + ""));
                   const setDialog =
                     toDo && setIsUpdateDialogOpen
                       ? setIsUpdateDialogOpen

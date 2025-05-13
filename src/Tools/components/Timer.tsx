@@ -7,8 +7,8 @@ import {
   FormControlLabel,
   Switch,
 } from "@mui/material";
-import { timerStore } from "../helpers/timerStore";
 import { formatTime } from "../../Common/helpers/dateTimeHelpers";
+import { timerStore } from "../helpers/TimerStore";
 
 const Timer = () => {
   const [displayTime, setDisplayTime] = useState(timerStore.getDisplayTime());

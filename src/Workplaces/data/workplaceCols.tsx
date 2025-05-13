@@ -1,4 +1,3 @@
-import React from "react";
 import { createDataGridInputCell } from "../../Common/components/generators/createDataGridInputCell";
 import { createRowIcons } from "../../Common/components/generators/createRowIcons";
 import { TWorkplace } from "../types/TWorkplace";

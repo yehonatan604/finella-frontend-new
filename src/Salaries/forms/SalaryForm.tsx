@@ -196,7 +196,7 @@ const SalaryForm = ({
               <Divider sx={{ my: 2, background: "silver" }} />
 
               <Box sx={{ display: "flex", gap: 2, flexDirection: "column" }}>
-                {(salary ? watch("hours") : salaryHours).map((item, index) => (
+                {(salary ? watch("hours") : salaryHours).map((_, index) => (
                   <Box
                     key={index}
                     sx={{ display: "flex", gap: 2, flexDirection: "column" }}
