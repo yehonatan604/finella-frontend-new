@@ -14,7 +14,7 @@ const useAuth = () => {
     const { user, role } = useSelector((state: TRootState) => state.authSlice);
     const { POST, GET } = HTTPMethodTypes;
     const dispatch = useDispatch();
-    useSocket(user);
+    useSocket(user!);
 
     const signup = useCallback(async (data: Record<string, unknown>) => {
         setLoading(true);
@@ -81,7 +81,7 @@ const useAuth = () => {
         } finally {
             setLoading(false);
         }
-    }, [GET, dispatch, logout]);;
+    }, [GET, dispatch, logout]);
 
     return {
         user,
