@@ -7,13 +7,13 @@ import useTheme from "../hooks/useTheme";
 import UserSummary from "../../Auth/components/UserSummary";
 import SummaryCharts from "../components/SummaryCharts";
 import AbsTopIcons from "../components/layout/AbsTopIcons";
+import logoNavy from "../../Assets/images/logo-big-navy.png";
+import logoWhite from "../../Assets/images/logo-big-white.png";
 
 const HomePage = () => {
   const { user } = useAuth();
   const { mode } = useTheme();
-  const logoImg = `https://self-manager-frontend.onrender.com/assets/${
-    mode === "light" ? "logo-big-navy-TOK_A8W6.png" : "logo-big-white-vklxlnMZ.png"
-  }`;
+  const logoImg = mode === "dark" ? logoWhite : logoNavy;
 
   return !user ? (
     <>
