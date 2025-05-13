@@ -17,6 +17,7 @@ import AboutPage from "../../Common/pages/About.page";
 import BalanceEntriesPage from "../../BalanceEntries/pages/BalanceEntries.page";
 import ProfilePage from "../../Auth/pages/Profile.page";
 import ChangePasswordPage from "../../Auth/pages/ChangePassword.page";
+import ForgotPasswordPage from "../../Auth/pages/ForgotPassword.page";
 
 const AppRouter = () => {
   const { loginByToken } = useAuth();
@@ -33,7 +34,7 @@ const AppRouter = () => {
       <Route path="/" element={<PageHolder />}>
         <Route index element={<HomePage />} />
         <Route path="about" element={<AboutPage />} />
-        <Route path="contact" element={<></>} />
+        <Route path="forgot-password" element={<ForgotPasswordPage />} />
       </Route>
 
       <Route path="/auth" element={<RouteGuard isLoggedIn={false} />}>

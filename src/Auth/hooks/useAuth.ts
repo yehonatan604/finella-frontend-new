@@ -126,6 +126,26 @@ const useAuth = () => {
         }
     }, [PATCH]);
 
+    const forgotPassword = useCallback(async (data: { email: string }) => {
+        setLoading(true);
+        try {
+            const response = await sendApiRequest("/auth/forgot-password/" + data.email, GET);
+            if (response) {
+                toastify.success("Password reset link sent to your email!");
+            }
+        } catch (err) {
+            const error = err as AxiosError;
+            console.log(error);
+            alert(
+                "Forgot Password Failed",
+                error?.response?.data + "",
+                "error",
+            );
+        } finally {
+            setLoading(false);
+        }
+    }, [GET]);
+
     return {
         user,
         role,
@@ -136,6 +156,7 @@ const useAuth = () => {
         loginByToken,
         updateUser,
         changePassword,
+        forgotPassword,
     };
 };
 

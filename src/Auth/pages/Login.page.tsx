@@ -17,6 +17,7 @@ import AbsTopIcons from "../../Common/components/layout/AbsTopIcons";
 import FormValidationMessage from "../../Common/components/form/FormValidationMessage";
 
 const LoginPage = () => {
+  const { login, loading } = useAuth();
   const {
     register,
     handleSubmit,
@@ -26,8 +27,6 @@ const LoginPage = () => {
     defaultValues: loginFormDefault,
     resolver: joiResolver(loginSchema),
   });
-
-  const { login, loading } = useAuth();
 
   const onSubmit = async (data: Record<string, unknown>) => {
     await login(data);
@@ -102,23 +101,39 @@ const LoginPage = () => {
 
         <Divider sx={{ my: 3, mb: 2 }} />
 
-        <Typography variant="body1">Don't have an account?</Typography>
-        <Link to={"/auth/signup"} style={{ textDecoration: "none" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            fullWidth
-            sx={{
-              mt: 2,
-              fontSize: "1.2rem",
-              width: "auto",
-              px: 2,
-            }}
-          >
-            Sign Up
-          </Button>
-        </Link>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <Typography variant="body1">Don't have an account?</Typography>
+          <Link to={"/auth/signup"} style={{ textDecoration: "none" }}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              fullWidth
+              sx={{
+                mt: 2,
+                fontSize: "1.2rem",
+                width: "auto",
+                px: 2,
+              }}
+            >
+              Sign Up
+            </Button>
+          </Link>
+          <Link to={"/forgot-password"} style={{ textDecoration: "none" }}>
+            <Button
+              color="primary"
+              size="small"
+              fullWidth
+              sx={{
+                mt: 2,
+                width: "auto",
+                px: 2,
+              }}
+            >
+              Forgot Password?
+            </Button>
+          </Link>
+        </Box>
       </Container>
       {loading && (
         <Box
