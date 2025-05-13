@@ -15,8 +15,8 @@ import WorkplacesPage from "../../Workplaces/pages/Workplaces.page";
 import TodosBoard from "../../Todos/pages/ToDoBoard.page";
 import AboutPage from "../../Common/pages/About.page";
 import BalanceEntriesPage from "../../BalanceEntries/pages/BalanceEntries.page";
-import ProfilePage from "../../Auth/pages/Profile.page";
-import ChangePasswordPage from "../../Auth/pages/ChangePassword.page";
+import ProfilePage from "../../Auth/pages/profile pages/Profile.page";
+import ChangePasswordPage from "../../Auth/pages/profile pages/ChangePassword.page";
 import ForgotPasswordPage from "../../Auth/pages/ForgotPassword.page";
 
 const AppRouter = () => {

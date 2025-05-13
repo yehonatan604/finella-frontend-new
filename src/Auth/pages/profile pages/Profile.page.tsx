@@ -1,12 +1,12 @@
 import { Box, Button, Divider } from "@mui/material";
-import Page from "../../Common/components/layout/Page";
-import FormField from "../../Common/components/form/FormField";
+import Page from "../../../Common/components/layout/Page";
+import FormField from "../../../Common/components/form/FormField";
 import { FormProvider, useForm } from "react-hook-form";
-import FormButtons from "../../Common/components/form/FormButtons";
-import useAuth from "../hooks/useAuth";
+import FormButtons from "../../../Common/components/form/FormButtons";
+import useAuth from "../../hooks/useAuth";
 import { DateTime } from "luxon";
-import useTheme from "../../Common/hooks/useTheme";
-import { TUser } from "../types/TUser";
+import useTheme from "../../../Common/hooks/useTheme";
+import { TUser } from "../../types/TUser";
 import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
