@@ -1,25 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Page from "../../Common/components/layout/Page";
-import {
-  Box,
-  Button,
-  Divider,
-  IconButton,
-  MenuItem,
-  Paper,
-  Switch,
-  TextField,
-} from "@mui/material";
+import { Box, Button, Divider, MenuItem, Paper, Switch, TextField } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import DeleteIcon from "@mui/icons-material/Delete";
 import useNoteAutomation from "../hooks/useNoteAutomation";
 import { DateTime } from "luxon";
 import useTheme from "../../Common/hooks/useTheme";
 import FormDialog from "../../Common/components/dialogs/FormDialog";
 import NoteForm from "../forms/Note.form";
-import { TNoteAutomation } from "../types/TNoteAutomation";
 import ShowInactiveCheckbox from "../../Common/components/ShowInactiveCheckbox";
+import { useDispatch } from "react-redux";
+import { entitiesActions } from "../../Core/store/entitiesSlice";
 
 const NoteAutomationPage = () => {
   const {
@@ -30,15 +21,14 @@ const NoteAutomationPage = () => {
     addNoteAutomation,
     handleSaveChanges,
     loading,
+    onDelete,
+    onUndelete,
   } = useNoteAutomation();
   const { mode } = useTheme();
+  const dispatch = useDispatch();
 
-  const [data, setData] = useState<TNoteAutomation[]>([]);
   const [showInactive, setShowInactive] = useState(true);
-
-  useEffect(() => {
-    setData(noteAutomations || []);
-  }, [noteAutomations]);
+  console.log(noteAutomations);
 
   return (
     <Page title="Note Automations">
@@ -78,7 +68,7 @@ const NoteAutomationPage = () => {
                   >
                     <TextField
                       select
-                      defaultValue={automation.noteId}
+                      value={automation.noteId}
                       size="small"
                       fullWidth
                       sx={{ minWidth: 200 }}
@@ -89,12 +79,12 @@ const NoteAutomationPage = () => {
                           : "Select a Note"
                       }
                       onChange={(e) => {
-                        setData((prev: TNoteAutomation[]) =>
-                          prev.map((note) =>
-                            note._id === automation._id
-                              ? { ...note, noteId: e.target.value }
-                              : note
-                          )
+                        dispatch(
+                          entitiesActions.updateEntityItem({
+                            type: "noteAutomations",
+                            item: { ...automation, noteId: e.target.value },
+                            id: automation._id + "",
+                          })
                         );
                       }}
                     >
@@ -122,7 +112,7 @@ const NoteAutomationPage = () => {
                       className={mode === "dark" ? "dark" : ""}
                       label="Date & Time"
                       type="datetime-local"
-                      defaultValue={
+                      value={
                         automation.dateTime
                           ? DateTime.fromISO(automation.dateTime, {
                               zone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -143,30 +133,30 @@ const NoteAutomationPage = () => {
                         const utcString =
                           newLocal.toUTC().toISO({ suppressMilliseconds: true }) || "";
 
-                        setData((prev: TNoteAutomation[]) =>
-                          prev.map((note) =>
-                            note._id === automation._id
-                              ? { ...note, dateTime: utcString }
-                              : note
-                          )
+                        dispatch(
+                          entitiesActions.updateEntityItem({
+                            type: "noteAutomations",
+                            item: { ...automation, dateTime: utcString },
+                            id: automation._id + "",
+                          })
                         );
                       }}
                     />
 
                     <TextField
                       select
-                      defaultValue={automation.repeat}
+                      value={automation.repeat}
                       size="small"
                       fullWidth
                       sx={{ minWidth: 150 }}
                       label="Repeat"
                       onChange={(e) => {
-                        setData((prev: TNoteAutomation[]) =>
-                          prev.map((note) =>
-                            note._id === automation._id
-                              ? { ...note, repeat: e.target.value }
-                              : note
-                          )
+                        dispatch(
+                          entitiesActions.updateEntityItem({
+                            type: "noteAutomations",
+                            item: { ...automation, repeat: e.target.value },
+                            id: automation._id + "",
+                          })
                         );
                       }}
                     >
@@ -181,15 +171,15 @@ const NoteAutomationPage = () => {
                       label="Extra Notes"
                       size="small"
                       fullWidth
-                      defaultValue={automation.notes || ""}
+                      value={automation.notes || ""}
                       sx={{ minWidth: 300 }}
                       onChange={(e) => {
-                        setData((prev: TNoteAutomation[]) =>
-                          prev.map((note) =>
-                            note._id === automation._id
-                              ? { ...note, notes: e.target.value }
-                              : note
-                          )
+                        dispatch(
+                          entitiesActions.updateEntityItem({
+                            type: "noteAutomations",
+                            item: { ...automation, notes: e.target.value },
+                            id: automation._id + "",
+                          })
                         );
                       }}
                       slotProps={{
@@ -200,19 +190,13 @@ const NoteAutomationPage = () => {
                     />
 
                     <Switch
-                      defaultChecked={automation.status === "active"}
+                      checked={automation.status === "active"}
                       onChange={() => {
-                        setData((prev: TNoteAutomation[]) =>
-                          prev.map((note) =>
-                            note._id === automation._id
-                              ? {
-                                  ...note,
-                                  status:
-                                    note.status === "active" ? "inactive" : "active",
-                                }
-                              : note
-                          )
-                        );
+                        if (automation.status === "active") {
+                          onDelete(automation._id || "");
+                        } else {
+                          onUndelete(automation._id || "");
+                        }
                       }}
                       slotProps={{
                         input: {
@@ -227,31 +211,6 @@ const NoteAutomationPage = () => {
                         },
                       }}
                     />
-
-                    <IconButton
-                      size="small"
-                      onClick={() => {
-                        setData((prev: TNoteAutomation[]) =>
-                          prev.filter((note) => note._id !== automation._id)
-                        );
-                      }}
-                      sx={{
-                        "&:hover": {
-                          backgroundColor: "transparent",
-                        },
-                      }}
-                    >
-                      <DeleteIcon
-                        fontSize="small"
-                        sx={{
-                          color: "error.main",
-                          cursor: "pointer",
-                          "&:hover": {
-                            color: "error.dark",
-                          },
-                        }}
-                      />
-                    </IconButton>
                   </Box>
 
                   <Divider sx={{ mt: 2 }} />
@@ -289,7 +248,9 @@ const NoteAutomationPage = () => {
           <Button
             variant="contained"
             color="success"
-            onClick={() => handleSaveChanges(data)}
+            onClick={async () => {
+              await handleSaveChanges();
+            }}
           >
             Save Changes
           </Button>

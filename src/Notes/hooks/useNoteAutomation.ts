@@ -9,6 +9,7 @@ import { TNoteAutomation } from "../types/TNoteAutomation";
 import { toastify } from "../../Common/utilities/toast";
 import { DateTime } from "luxon";
 import { convertedNoteAutomation } from "../helpers/convertAutomationDate";
+import { question } from "../../Common/utilities/question";
 
 const useNoteAutomation = () => {
     const { user } = useAuth();
@@ -39,6 +40,106 @@ const useNoteAutomation = () => {
         }));
     }, [user?._id, dispatch]);
 
+
+    const handleSaveChanges = useCallback(async () => {
+        try {
+            setLoading(true);
+            const changedData = noteAutomations?.filter((automation) => {
+                const converted = convertedNoteAutomation(automation);
+                const originalAutomation = noteAutomations?.find((item) => item._id === converted._id);
+
+                if (converted._id?.startsWith("temp")) {
+                    return true;
+                }
+
+                return (
+                    originalAutomation?.noteId !== converted.noteId ||
+                    originalAutomation?.dateTime !== converted.dateTime ||
+                    originalAutomation?.repeat !== converted.repeat ||
+                    originalAutomation?.notes !== converted.notes ||
+                    originalAutomation?.status !== converted.status
+                );
+            });
+
+            changedData?.forEach(async (automation: TNoteAutomation) => {
+                const converted = convertedNoteAutomation(automation);
+                if (converted._id?.startsWith("temp")) {
+                    delete converted._id;
+                    const res = await sendApiRequest("/note-automations", HTTPMethodTypes.POST, {
+                        ...converted,
+                        userId: user?._id,
+                    });
+
+                    dispatch(entitiesActions.updateEntityItem({
+                        type: "noteAutomations",
+                        item: { ...converted, _id: res.data._id },
+                        id: automation._id + "",
+                    }));
+                } else {
+                    await sendApiRequest(`/note-automations`, HTTPMethodTypes.PUT, converted);
+                    dispatch(entitiesActions.updateEntityItem({
+                        type: "noteAutomations",
+                        item: converted,
+                        id: converted._id + "",
+                    }));
+                }
+            });
+            toastify.success("Changes saved successfully.");
+        } catch (error) {
+            console.error("Error saving changes:", error);
+        } finally {
+            setLoading(false);
+        }
+    }, [dispatch, noteAutomations, user?._id]);
+
+    const onUndelete = useCallback(
+        async (id: string) => {
+            try {
+                setLoading(true);
+                await question(
+                    "Undelete Note Automation",
+                    "Are you sure you want to undelete this Note Automation?",
+                    "warning",
+                    async () => {
+                        await sendApiRequest(`/note-automations/undelete/${id}`, HTTPMethodTypes.PATCH);
+                        dispatch(entitiesActions.undeleteEntityItem({ type: "notes", id }));
+                        toastify.success("Note Automation undeleted successfully");
+                    }
+                );
+            } catch (e) {
+                toastify.error("Error undeleting Note");
+                console.error(e);
+            } finally {
+                setLoading(false);
+            }
+        },
+        [dispatch]
+    );
+
+    const onDelete = useCallback(
+        async (id: string) => {
+            try {
+                setLoading(true);
+                await question(
+                    "Delete Note Automation",
+                    "Are you sure you want to delete this Note Automation?",
+                    "warning",
+                    async () => {
+                        await sendApiRequest(`/note-automations/${id}`, HTTPMethodTypes.DELETE);
+                        dispatch(entitiesActions.removeEntityItem({ type: "noteAutomations", id }));
+                        toastify.success("Note Automation deleted successfully");
+                    }
+                );
+            } catch (e) {
+                toastify.error("Error deleting Note");
+                console.error(e);
+            } finally {
+                setLoading(false);
+            }
+        },
+        [dispatch]
+    );
+
     useEffect(() => {
         const fetchNoteAutomations = async () => {
             try {
@@ -49,7 +150,7 @@ const useNoteAutomation = () => {
                 );
 
                 if (!notes) {
-                    const resNotes = await sendApiRequest("/note", HTTPMethodTypes.GET);
+                    const resNotes = await sendApiRequest("/note/by", HTTPMethodTypes.GET);
                     dispatch(entitiesActions.setEntity({
                         type: "notes",
                         data: resNotes.data || [],
@@ -70,57 +171,6 @@ const useNoteAutomation = () => {
         fetchNoteAutomations();
     }, [notes, dispatch]);
 
-    const handleSaveChanges = useCallback(async (data: TNoteAutomation[]) => {
-        try {
-            setLoading(true);
-
-            const changedData = data.filter((automation) => {
-                if (automation._id?.startsWith("temp-")) {
-                    return true;
-                }
-
-                const converted = convertedNoteAutomation(automation);
-                const originalAutomation = noteAutomations?.find((item) => item._id === converted._id);
-
-                return (
-                    originalAutomation?.noteId !== converted.noteId ||
-                    originalAutomation?.dateTime !== converted.dateTime ||
-                    originalAutomation?.repeat !== converted.repeat ||
-                    originalAutomation?.notes !== converted.notes ||
-                    originalAutomation?.status !== converted.status
-                );
-            });
-
-            changedData?.forEach(async (automation: TNoteAutomation) => {
-                const converted = convertedNoteAutomation(automation);
-
-                if (automation._id?.startsWith("temp-")) {
-                    delete converted._id;
-                    const res = await sendApiRequest("/note-automations", HTTPMethodTypes.POST, {
-                        ...converted,
-                        userId: user?._id,
-                    });
-                    dispatch(entitiesActions.addEntityItem({
-                        type: "noteAutomations",
-                        item: res.data,
-                    }));
-                } else {
-                    await sendApiRequest(`/note-automations`, HTTPMethodTypes.PUT, converted);
-                    dispatch(entitiesActions.updateEntityItem({
-                        type: "noteAutomations",
-                        item: converted,
-                        id: converted._id + "",
-                    }));
-                }
-            });
-            toastify.success("Changes saved successfully.");
-        } catch (error) {
-            console.error("Error saving changes:", error);
-        } finally {
-            setLoading(false);
-        }
-    }, [dispatch, noteAutomations, user?._id]);
-
     return {
         notes,
         noteAutomations,
@@ -129,6 +179,8 @@ const useNoteAutomation = () => {
         addNoteAutomation,
         handleSaveChanges,
         loading,
+        onDelete,
+        onUndelete,
     };
 };
 
