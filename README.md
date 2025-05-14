@@ -6,11 +6,7 @@ This repository contains the frontend of Finella, built with **React**, **MUI**,
 
 ---
 
-## 🌐 Live Demo: [Finella App (onRender)](https://finella-frontend.onrender.com/)
-
----
-
----
+## Live Demo: [Finella App (onRender)](https://finella-frontend.onrender.com/)
 
 ## Backend Repository: [Finella Backend GitHub](https://github.com/yehonatan604/Finella-backend)
 
