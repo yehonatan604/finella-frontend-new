@@ -8,8 +8,6 @@ This repository contains the frontend of Finella, built with **React**, **MUI**,
 
 ## Live Demo: [Finella App (onRender)](https://finella-frontend.onrender.com/)
 
-## Backend Repository: [Finella Backend GitHub](https://github.com/yehonatan604/Finella-backend)
-
 ---
 
 ## Features
@@ -66,7 +64,7 @@ npm install
 Create a `.env` file:
 
 ```env
-VITE_API_URL=https://self-manager-backend.onrender.com
+VITE_API_URL=https://your-backend-url.onrender.com
 ```
 
 > Make sure this matches your deployed backend or local server.
@@ -104,6 +102,8 @@ src/
 ```
 
 ---
+
+## Backend Repository: [Finella Backend GitHub](https://github.com/yehonatan604/Finella-backend)
 
 ---
 
