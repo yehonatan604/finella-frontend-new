@@ -5,7 +5,6 @@ import { HTTPMethodTypes } from "../../Common/enums/HTTPMethodTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { TRootState } from "../../Core/store/store";
 import { entitiesActions } from "../../Core/store/entitiesSlice";
-import { TNoteAutomation } from "../types/TNoteAutomation";
 import { toastify } from "../../Common/utilities/toast";
 import { DateTime } from "luxon";
 import { convertedNoteAutomation } from "../helpers/convertAutomationDate";
@@ -44,27 +43,12 @@ const useNoteAutomation = () => {
     const handleSaveChanges = useCallback(async () => {
         try {
             setLoading(true);
-            const changedData = noteAutomations?.filter((automation) => {
+            for (const automation of noteAutomations ?? []) {
                 const converted = convertedNoteAutomation(automation);
-                const originalAutomation = noteAutomations?.find((item) => item._id === converted._id);
 
-                if (converted._id?.startsWith("temp")) {
-                    return true;
-                }
-
-                return (
-                    originalAutomation?.noteId !== converted.noteId ||
-                    originalAutomation?.dateTime !== converted.dateTime ||
-                    originalAutomation?.repeat !== converted.repeat ||
-                    originalAutomation?.notes !== converted.notes ||
-                    originalAutomation?.status !== converted.status
-                );
-            });
-
-            changedData?.forEach(async (automation: TNoteAutomation) => {
-                const converted = convertedNoteAutomation(automation);
                 if (converted._id?.startsWith("temp")) {
                     delete converted._id;
+
                     const res = await sendApiRequest("/note-automations", HTTPMethodTypes.POST, {
                         ...converted,
                         userId: user?._id,
@@ -77,13 +61,14 @@ const useNoteAutomation = () => {
                     }));
                 } else {
                     await sendApiRequest(`/note-automations`, HTTPMethodTypes.PUT, converted);
+
                     dispatch(entitiesActions.updateEntityItem({
                         type: "noteAutomations",
                         item: converted,
                         id: converted._id + "",
                     }));
                 }
-            });
+            }
             toastify.success("Changes saved successfully.");
         } catch (error) {
             console.error("Error saving changes:", error);
