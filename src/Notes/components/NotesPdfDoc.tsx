@@ -4,7 +4,7 @@ type PdfDocProps = {
   rows: Record<string, unknown>[];
 };
 
-const WorkplacesPdfDoc = (props: PdfDocProps) => {
+const NotesPdfDoc = (props: PdfDocProps) => {
   const { rows } = props;
 
   const styles = StyleSheet.create({
@@ -37,7 +37,7 @@ const WorkplacesPdfDoc = (props: PdfDocProps) => {
       textAlign: "center",
     },
     smallCell: {
-      flex: 0.6,
+      flex: 0.4,
       textAlign: "center",
     },
   });
@@ -61,18 +61,20 @@ const WorkplacesPdfDoc = (props: PdfDocProps) => {
           {/* Header Row */}
           <View style={styles.headerRow}>
             <Text style={{ ...styles.cell, flex: 0.6 }}>Name</Text>
-            <Text style={styles.cell}>Address</Text>
-            <Text style={styles.smallCell}>Price per Hour</Text>
-            <Text style={styles.smallCell}>Price per Month</Text>
+            <Text style={styles.cell}>Content</Text>
+            <Text style={styles.smallCell}>Date</Text>
+            <Text style={styles.smallCell}>Status</Text>
+            <Text style={styles.smallCell}>Is Sticky</Text>
           </View>
 
           {/* Data Rows */}
           {(rows as Record<string, string>[]).map((row, index) => (
             <View style={styles.row} key={index}>
               <Text style={{ ...styles.cell, flex: 0.6 }}>{row.name}</Text>
-              <Text style={styles.cell}>{row.address}</Text>
-              <Text style={styles.smallCell}>{row.pricePerHour}</Text>
-              <Text style={styles.smallCell}>{row.pricePerMonth}</Text>
+              <Text style={styles.cell}>{row.content}</Text>
+              <Text style={styles.smallCell}>{row.date}</Text>
+              <Text style={styles.smallCell}>{row.noteStatus}</Text>
+              <Text style={styles.smallCell}>{row.isSticky ? "True" : "False"}</Text>
             </View>
           ))}
         </View>
@@ -81,4 +83,4 @@ const WorkplacesPdfDoc = (props: PdfDocProps) => {
   );
 };
 
-export default WorkplacesPdfDoc;
+export default NotesPdfDoc;

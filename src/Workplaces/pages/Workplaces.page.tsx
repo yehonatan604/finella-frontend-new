@@ -87,7 +87,12 @@ const WorkplacesPage = () => {
       </Page>
 
       {paginatedRows.length > 0 && (
-        <PageButtons fileName="workplaces" rows={rows} Doc={WorkplacesPdfDoc} />
+        <PageButtons
+          fileName="workplaces"
+          rows={rows}
+          Doc={WorkplacesPdfDoc}
+          shouldPop={false}
+        />
       )}
       <PlusButton onClick={() => setIsAddDialogOpen(true)} />
 

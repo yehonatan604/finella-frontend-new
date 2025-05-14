@@ -12,7 +12,7 @@ import useTheme from "../../Common/hooks/useTheme";
 import StyledDataGrid from "../../Common/components/styled/StyledDataGrid";
 import { pageSizeOptions } from "../../Common/helpers/paginationHelpers";
 import { TDataGridRow } from "../../Common/types/TDataGridRow";
-import WorkplacesPdfDoc from "../../Workplaces/components/WorkplacesPdfDoc";
+import NotesPdfDoc from "../components/NotesPdfDoc";
 
 const NotesPage = () => {
   const { mode } = useTheme();
@@ -99,7 +99,12 @@ const NotesPage = () => {
       </Page>
 
       {paginatedRows.length > 0 && (
-        <PageButtons fileName="workplaces" rows={rows} Doc={WorkplacesPdfDoc} />
+        <PageButtons
+          fileName="workplaces"
+          rows={rows}
+          Doc={NotesPdfDoc}
+          shouldPop={false}
+        />
       )}
       <PlusButton onClick={() => setIsAddDialogOpen(true)} />
 
