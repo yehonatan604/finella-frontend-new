@@ -1,12 +1,12 @@
 import { Box } from "@mui/material";
-import Page from "../../../Common/components/layout/Page";
-import FormField from "../../../Common/components/form/FormField";
 import { FormProvider, useForm } from "react-hook-form";
-import FormButtons from "../../../Common/components/form/FormButtons";
-import useAuth from "../../hooks/useAuth";
 import { joiResolver } from "@hookform/resolvers/joi";
-import { changePasswordSchema } from "../../validations/changePassword.schema";
-import { TChangePassword } from "../../types/TChangePassword";
+import FormButtons from "../../Common/components/form/FormButtons";
+import FormField from "../../Common/components/form/FormField";
+import useAuth from "../hooks/useAuth";
+import { TChangePassword } from "../types/TChangePassword";
+import { changePasswordSchema } from "../validations/changePassword.schema";
+import Page from "../../Common/components/layout/Page";
 
 const ChangePasswordPage = () => {
   const { changePassword } = useAuth();

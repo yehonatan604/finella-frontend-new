@@ -1,19 +1,19 @@
 import { Box, Button, Divider } from "@mui/material";
-import Page from "../../../Common/components/layout/Page";
-import FormField from "../../../Common/components/form/FormField";
+import Page from "../../Common/components/layout/Page";
+import FormField from "../../Common/components/form/FormField";
 import { FormProvider, useForm } from "react-hook-form";
-import FormButtons from "../../../Common/components/form/FormButtons";
-import useAuth from "../../hooks/useAuth";
+import FormButtons from "../../Common/components/form/FormButtons";
+import useAuth from "../hooks/useAuth";
 import { DateTime } from "luxon";
-import useTheme from "../../../Common/hooks/useTheme";
-import { TUser } from "../../types/TUser";
+import useTheme from "../../Common/hooks/useTheme";
+import { TUser } from "../types/TUser";
 import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
   const { user, updateUser } = useAuth();
   const { mode } = useTheme();
   const formMethods = useForm<TUser>({
-    defaultValues: { ...user!, dob: user?.dob.split("T")[0] },
+    defaultValues: { ...user!, dob: user?.dob ? user?.dob.split("T")[0] : "" },
   });
   const nav = useNavigate();
 
@@ -89,7 +89,7 @@ const ProfilePage = () => {
                 type="date"
                 name="dob"
                 required
-                value={watch("dob")}
+                value={watch("dob") ?? ""}
                 onChange={(e) => {
                   const date = DateTime.fromISO(e.target.value, {
                     zone: "local",
