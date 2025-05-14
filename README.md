@@ -1,4 +1,4 @@
-# 🧠 Finella – Frontend
+# Finella – Frontend
 
 Finella is a self-management productivity app designed to help individuals track their salaries, tasks, notes, and automate recurring responsibilities — all in a sleek, real-time interface powered by sockets and visual insights.
 
@@ -6,21 +6,19 @@ This repository contains the frontend of Finella, built with **React**, **MUI**,
 
 ---
 
-## 🌐 Live Demo
-
-👉 [Finella App (onRender)](https://finella-frontend.onrender.com/)
+## 🌐 Live Demo [Finella App (onRender)](https://finella-frontend.onrender.com/)
 
 ---
 
-## 📸 Features
+## Features
 
-- 📅 **Salary & Finance Tracking** – Visualize income and salary breakdowns with charts.
-- 🧾 **Notes System** – Write, pin, Automate and organize personal notes.
-- ✅ **To-Do Manager** – Create, manage, and automate task alerts.
-- 🔔 **Real-Time Notifications** – Uses Socket.IO to alert on automations and deadlines.
-- 📈 **Data Export** – Export your data to PDF or Excel files.
-- 🛠 **Utility Tools** – Includes a draggable Timer, Calculator, Converters and more.
-- 🎨 **Dark Mode** – Aesthetic, comfortable, and themeable UI.
+- **Salary & Finance Tracking** – Visualize income and salary breakdowns with charts.
+- **Notes System** – Write, pin, Automate and organize personal notes.
+- **To-Do Manager** – Create, manage, and automate task alerts.
+- **Real-Time Notifications** – Uses Socket.IO to alert on automations and deadlines.
+- **Data Export** – Export your data to PDF or Excel files.
+- **Utility Tools** – Includes a draggable Timer, Calculator, Converters and more.
+- **Dark Mode** – Aesthetic, comfortable, and themeable UI.
 
 ---
 
@@ -28,13 +26,13 @@ This repository contains the frontend of Finella, built with **React**, **MUI**,
 
 Finella includes built-in protections to keep your account secure:
 
-- ✅ **Email Verification Required**: After signing up, you must confirm your email address. You cannot log in until your account is verified.
-- 🚫 **Login Protection**: If you enter the wrong password 3 times in a row, your account will be locked for 24 hours. You will receive an email with a reset link to unlock it early.
-- 🔁 **Forgot Password**: If you forget your password, you can easily reset it via a secure email link.
+- **Email Verification Required**: After signing up, you must confirm your email address. You cannot log in until your account is verified.
+- **Login Protection**: If you enter the wrong password 3 times in a row, your account will be locked for 24 hours. You will receive an email with a reset link to unlock it early.
+- **Forgot Password**: If you forget your password, you can easily reset it via a secure email link.
 
 ---
 
-## 🚀 Tech Stack
+## Tech Stack
 
 - **React** + **Vite**
 - **MUI** (Material UI)
