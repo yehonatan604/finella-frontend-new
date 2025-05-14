@@ -42,9 +42,9 @@ const addSalaryFromExcel = (data: unknown, setSalaryHours: Dispatch<React.SetSta
     setSalaryHours(
         (data as THoursFromExcel[]).map((item: THoursFromExcel) => {
             return {
-                day: item["תאריך"].split("/")[0],
-                startTime: item["שעת התחלה"],
-                endTime: item["שעת סיום"],
+                day: item.date.split("/")[0],
+                startTime: item.start,
+                endTime: item.end,
                 notes: "",
             };
         })

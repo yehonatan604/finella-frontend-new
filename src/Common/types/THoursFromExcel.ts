@@ -1,5 +1,5 @@
 export type THoursFromExcel = {
-    תאריך: string;
-    'שעת התחלה': string;
-    'שעת סיום': string;
+    date: string;
+    start: string;
+    end: string;
 };
