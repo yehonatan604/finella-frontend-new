@@ -18,7 +18,7 @@ import { TEntity } from "../../Common/types/TEntity";
 
 const useBalanceEntry = () => {
     const { user } = useAuth();
-    const fetchedBalanceEntries = useSelector((state: TRootState) => state.entitiesSlice.balanceEntries);
+    const bEntries = useSelector((state: TRootState) => state.entitiesSlice.balanceEntries);
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(false);
@@ -71,7 +71,7 @@ const useBalanceEntry = () => {
                     id: string | undefined;
                 }
             ) => {
-                const fetchedRow = fetchedBalanceEntries?.find((bEntry) => bEntry._id === row.id);
+                const fetchedRow = bEntries?.find((bEntry) => bEntry._id === row.id);
 
                 const fields = ["name", "date", "type", "price", "notes"] as const;
 
@@ -107,7 +107,7 @@ const useBalanceEntry = () => {
                 };
                 onUpdate(finalRow as unknown as TBalanceEntry);
 
-                const finalBentries: TBalanceEntry[] = (fetchedBalanceEntries ?? []).map((bEntry) => {
+                const finalBentries: TBalanceEntry[] = (bEntries ?? []).map((bEntry) => {
                     if (bEntry._id === row.id) {
                         return finalRow as unknown as TBalanceEntry;
                     }
@@ -117,7 +117,7 @@ const useBalanceEntry = () => {
                 dispatch(entitiesActions.setEntity({ type: "balanceEntries", data: finalBentries }));
                 toastify.success("Balance Entry updated successfully");
             },
-        [dispatch, fetchedBalanceEntries, onUpdate]
+        [dispatch, bEntries, onUpdate]
     );
 
     const onDelete = useCallback(
@@ -197,7 +197,7 @@ const useBalanceEntry = () => {
         () => balanceEntryCols(
             onCellUpdate,
             (params: TDataGridInputCellParams) => {
-                setSelectedBEntry(fetchedBalanceEntries?.find((bEntry) => bEntry._id === params.id) ?? null);
+                setSelectedBEntry(bEntries?.find((bEntry) => bEntry._id === params.id) ?? null);
                 setIsUploadDialogOpen(true)
             },
             (params: TDataGridInputCellParams) => {
@@ -207,10 +207,10 @@ const useBalanceEntry = () => {
                 onUndelete(params.id as string);
             },
         ),
-        [fetchedBalanceEntries, onCellUpdate, onDelete, onUndelete]
+        [bEntries, onCellUpdate, onDelete, onUndelete]
     );
 
-    const rows = useMemo(() => balanceEntryRows(fetchedBalanceEntries ?? []), [fetchedBalanceEntries]);
+    const rows = useMemo(() => balanceEntryRows(bEntries ?? []), [bEntries]);
 
     const filteredRows = rows.filter((row) => {
         return JSON.stringify(row).toLowerCase().includes(search.toLowerCase()) &&
@@ -260,7 +260,7 @@ const useBalanceEntry = () => {
         setMonths,
         pickedType,
         setPickedType,
-        fetchedBalanceEntries,
+        bEntries,
         selectedBEntry,
         setSelectedBEntry,
         setSearch,
@@ -270,7 +270,10 @@ const useBalanceEntry = () => {
         paginationModel,
         setPaginationModel,
         paginatedRows: paginatedRows(paginationModel, filteredRows),
-        user
+        user,
+        getBalanceEntries,
+        onDelete,
+        onUndelete,
     };
 }
 

@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect, useMemo } from "react";
 import useAuth from "../../Auth/hooks/useAuth";
 import { HTTPMethodTypes } from "../../Common/enums/HTTPMethodTypes";
-import { THoursFromExcel } from "../../Common/types/THoursFromExcel";
 import { TSalary } from "../types/TSalary";
 import { TSalaryHours } from "../types/TSalaryHours";
 import useWorkplaces from "../../Workplaces/hooks/useWorkplace";
@@ -15,10 +14,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { TRootState } from "../../Core/store/store";
 import { entitiesActions } from "../../Core/store/entitiesSlice";
 import { defaultPageSize, paginatedRows } from "../../Common/helpers/paginationHelpers";
+import useBalanceEntry from "../../BalanceEntries/hooks/useBalanceEntry";
+import { calcTotalHours, calcTotalSum, getFullDate } from "../helpers/salaryHelpers";
 
 const useSalary = (isPage?: boolean) => {
     const { user } = useAuth();
     const { workplaces, getAllWorkplaces } = useWorkplaces();
+    const {
+        bEntries, getBalanceEntries, onUpdate: onUpdateBentry, onDelete: onDeleteBentry, onUndelete: onUndeleteBentry
+    } = useBalanceEntry();
 
     const fetchedSalaries = useSelector((state: TRootState) => state.entitiesSlice.salaries);
     const dispatch = useDispatch();
@@ -43,44 +47,7 @@ const useSalary = (isPage?: boolean) => {
         pageSize: defaultPageSize,
     });
 
-    const addNewSalaryHour = useCallback(() => {
-        setSalaryHours((prev) => {
-            return [
-                ...prev,
-                {
-                    day: "",
-                    startTime: "",
-                    endTime: "",
-                    notes: "",
-                },
-            ];
-        });
-    }, []);
-
-    const removeSalaryHour = useCallback((index: number) => {
-        setSalaryHours((prev) => {
-            const newSalaryHours = [...prev];
-            newSalaryHours.splice(index, 1);
-            return newSalaryHours;
-        });
-    }, []);
-
-    const addSalaryFromExcel = useCallback((data: unknown) => {
-        console.log(data);
-
-        setSalaryHours(
-            (data as THoursFromExcel[]).map((item: THoursFromExcel) => {
-                return {
-                    day: item["תאריך"].split("/")[0],
-                    startTime: item["שעת התחלה"],
-                    endTime: item["שעת סיום"],
-                    notes: "",
-                };
-            })
-        );
-    }, []);
-
-    const onSubmit = async (data: Record<string, unknown>) => {
+    const onSubmit = async (data: TSalary) => {
         try {
             setLoading(true);
             const newSalary = await sendApiRequest("/salary", HTTPMethodTypes.POST, data);
@@ -90,17 +57,12 @@ const useSalary = (isPage?: boolean) => {
                     (workplace) => workplace._id === data.workPlaceId
                 );
 
-                const fullDate = (() => {
-                    const [month, year] = (data.date as string).split("-").map(Number);
-                    const today = new Date();
-                    return new Date(year, month - 1, today.getDate());
-                })();
-
                 const balanceEntry = {
-                    name: `Salary ${data.date} - ${workplace?.name}`,
                     userId: user?._id,
-                    price: calcTotalSum(data as TSalary) || workplace?.pricePerMonth,
-                    date: fullDate,
+                    salaryId: newSalary.data._id,
+                    name: `Salary ${data.date} - ${workplace?.name}`,
+                    price: calcTotalSum(data as TSalary, workplaces || []) || workplace?.pricePerMonth,
+                    date: getFullDate(data).toISOString(),
                     type: "income",
                     notes: `Salary ${data.date} - ${workplace?.name}`,
                 };
@@ -137,25 +99,6 @@ const useSalary = (isPage?: boolean) => {
         }
     }, [dispatch]);
 
-    const calcTotalHours = useCallback((hours: TSalaryHours[]) => {
-        return hours.reduce((acc, curr) => {
-            const startTime = new Date(`2022-01-${curr.day}T${curr.startTime}`);
-            const endTime = new Date(`2022-01-${curr.day}T${curr.endTime}`);
-            const diff = endTime.getTime() - startTime.getTime();
-            const hours = diff / 1000 / 60 / 60;
-            return acc + hours;
-        }, 0);
-    }, []);
-
-    const calcTotalSum = useCallback(
-        (salary: TSalary) => {
-            const price =
-                workplaces?.find((workplace) => workplace._id === salary.workPlaceId)
-                    ?.pricePerHour || 0;
-            return price * calcTotalHours(salary.hours);
-        },
-        [workplaces, calcTotalHours]
-    );
 
     const onUpdate = useCallback(
         async (data: TSalary) => {
@@ -168,6 +111,27 @@ const useSalary = (isPage?: boolean) => {
 
                 await sendApiRequest(`/salary`, HTTPMethodTypes.PUT, data);
 
+
+                await getBalanceEntries("?salaryId=" + data._id);
+                const balanceEntry = bEntries?.find((entry) => entry.salaryId === data._id);
+                if (balanceEntry) {
+                    const updatedEntry = {
+                        ...balanceEntry,
+                        price: +calcTotalSum(data, workplaces || []) || +(workplaces?.find(
+                            (workplace) => workplace._id === data.workPlaceId
+                        )?.pricePerMonth || 0),
+                        date: getFullDate(data).toISOString(),
+                        name: `Salary ${getFullDate(data).toLocaleDateString("he-IL", { year: "numeric" })} - ${workplaces?.find(
+                            (workplace) => workplace._id === data.workPlaceId
+                        )?.name}`,
+                        notes: `Salary ${getFullDate(data).toLocaleDateString("he-IL", { year: "numeric" })} - ${workplaces?.find(
+                            (workplace) => workplace._id === data.workPlaceId
+                        )?.name}`,
+                    };
+
+                    await onUpdateBentry(updatedEntry);
+                }
+
                 dispatch(entitiesActions.updateEntityItem({ type: "salaries", item: data, id: data._id! }));
                 toastify.success("Balance Entry updated successfully");
             } catch (error) {
@@ -179,7 +143,7 @@ const useSalary = (isPage?: boolean) => {
                 setSalaryHours([]);
             }
         },
-        [dispatch]
+        [bEntries, dispatch, getBalanceEntries, onUpdateBentry, workplaces]
     );
 
     const onCellUpdate = useMemo(
@@ -201,7 +165,7 @@ const useSalary = (isPage?: boolean) => {
                     year: fetchedRow?.date.split("-")[1] || 0,
                     month: fetchedRow?.date.split("-")[0] || 0,
                     "total hours": calcTotalHours(fetchedRow?.hours || []),
-                    "total sum": calcTotalSum(fetchedRow!) || 0,
+                    "total sum": calcTotalSum(fetchedRow!, workplaces || []) || 0,
                 };
 
                 const changedRow = {
@@ -228,7 +192,7 @@ const useSalary = (isPage?: boolean) => {
 
                 onUpdate(finalRow as unknown as TSalary);
             },
-        [calcTotalHours, calcTotalSum, fetchedSalaries, onUpdate, user?._id, workplaces]
+        [fetchedSalaries, onUpdate, user?._id, workplaces]
     );
 
     const onDelete = useCallback(
@@ -243,6 +207,13 @@ const useSalary = (isPage?: boolean) => {
                         await sendApiRequest(`/salary/${id}`, HTTPMethodTypes.DELETE, { userId: user?._id });
                         dispatch(entitiesActions.removeEntityItem({ type: "salaries", id }));
                         toastify.success("Salary deleted successfully");
+
+                        await getBalanceEntries("?salaryId=" + id);
+
+                        const balanceEntry = bEntries?.find((entry) => entry.salaryId === id);
+                        if (balanceEntry) {
+                            await onDeleteBentry(balanceEntry._id!);
+                        }
                     }
                 );
             } catch (error) {
@@ -253,7 +224,7 @@ const useSalary = (isPage?: boolean) => {
                 setSelectedSalary(null);
                 setSalaryHours([]);
             }
-        }, [user?._id, dispatch]);
+        }, [user?._id, dispatch, getBalanceEntries, bEntries, onDeleteBentry]);
 
     const onUndelete = useCallback(
         async (id: string) => {
@@ -267,7 +238,13 @@ const useSalary = (isPage?: boolean) => {
                         await sendApiRequest(`/salary/undelete/${id}`, HTTPMethodTypes.PATCH, { userId: user?._id });
                         dispatch(entitiesActions.undeleteEntityItem({ type: "salaries", id }));
                         toastify.success("Salary undeleted successfully");
-                        setLoading(false);
+
+                        await getBalanceEntries("?salaryId=" + id);
+
+                        const balanceEntry = bEntries?.find((entry) => entry.salaryId === id);
+                        if (balanceEntry) {
+                            await onUndeleteBentry(balanceEntry._id!);
+                        }
                     }
                 );
             } catch (error) {
@@ -279,7 +256,7 @@ const useSalary = (isPage?: boolean) => {
                 setSalaryHours([]);
             }
         },
-        [user?._id, dispatch]
+        [user?._id, dispatch, getBalanceEntries, bEntries, onUndeleteBentry]
     );
 
     const columns = useMemo(
@@ -301,8 +278,8 @@ const useSalary = (isPage?: boolean) => {
         fetchedSalaries ?? [],
         workplaces!,
         calcTotalHours,
-        calcTotalSum
-    ), [calcTotalHours, calcTotalSum, fetchedSalaries, workplaces]);
+        (salary: TSalary) => calcTotalSum(salary, workplaces!)
+    ), [fetchedSalaries, workplaces]);
 
     const filteredRows = rows.filter((row) =>
         JSON.stringify(row).toLowerCase().includes(search.toLowerCase()) &&
@@ -310,7 +287,7 @@ const useSalary = (isPage?: boolean) => {
     );
 
     useEffect(() => {
-        getAllWorkplaces();
+        if (!workplaces) getAllWorkplaces();
 
         if (isPage) {
             const fetchData = async () => {
@@ -338,12 +315,9 @@ const useSalary = (isPage?: boolean) => {
 
             fetchData();
         }
-    }, [fromYear, getAllWorkplaces, getSalaries, isPage, months, pickedWorkplaces, toYear]);
+    }, [fromYear, getAllWorkplaces, getSalaries, isPage, months, pickedWorkplaces, toYear, workplaces]);
 
     return {
-        addNewSalaryHour,
-        removeSalaryHour,
-        addSalaryFromExcel,
         onSubmit,
         toggleUploadDialog,
         isUploadDialogOpen,
@@ -360,7 +334,6 @@ const useSalary = (isPage?: boolean) => {
         fetchedSalaries,
         onUpdate,
         selectedSalary,
-        setSelectedSalary,
         setSearch,
         filteredRows,
         showInactive,
@@ -370,7 +343,8 @@ const useSalary = (isPage?: boolean) => {
         paginatedRows: paginatedRows(paginationModel, filteredRows),
         setAddBEntry,
         addBEntry,
-        user
+        user,
+        setSalaryHours,
     };
 };
 

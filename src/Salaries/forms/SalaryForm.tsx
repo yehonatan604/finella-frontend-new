@@ -19,6 +19,11 @@ import FormField from "../../Common/components/form/FormField";
 import useTheme from "../../Common/hooks/useTheme";
 import { DateTime } from "luxon";
 import FormButtons from "../../Common/components/form/FormButtons";
+import {
+  addNewSalaryHour,
+  removeSalaryHour,
+  addSalaryFromExcel,
+} from "../helpers/salaryHelpers";
 
 const SalaryForm = ({
   setIsDialogOpen,
@@ -30,9 +35,6 @@ const SalaryForm = ({
   salary?: TSalary | null;
 }) => {
   const {
-    addNewSalaryHour,
-    removeSalaryHour,
-    addSalaryFromExcel,
     onSubmit,
     onUpdate,
     toggleUploadDialog,
@@ -42,6 +44,7 @@ const SalaryForm = ({
     addBEntry,
     setAddBEntry,
     user,
+    setSalaryHours,
   } = useSalary();
 
   const { mode } = useTheme();
@@ -179,7 +182,7 @@ const SalaryForm = ({
                   variant="contained"
                   color="primary"
                   size="small"
-                  onClick={addNewSalaryHour}
+                  onClick={() => addNewSalaryHour(setSalaryHours)}
                 >
                   Add Salary Hour
                 </Button>
@@ -269,7 +272,7 @@ const SalaryForm = ({
                           variant="contained"
                           color="error"
                           size="small"
-                          onClick={() => removeSalaryHour(index)}
+                          onClick={() => removeSalaryHour(index, setSalaryHours)}
                         >
                           -
                         </Button>
@@ -278,7 +281,7 @@ const SalaryForm = ({
                             variant="contained"
                             color="primary"
                             size="small"
-                            onClick={addNewSalaryHour}
+                            onClick={() => addNewSalaryHour(setSalaryHours)}
                           >
                             +
                           </Button>
@@ -307,7 +310,7 @@ const SalaryForm = ({
           <UploadExcelDialog
             open={isUploadDialogOpen}
             onClose={toggleUploadDialog}
-            onUpload={addSalaryFromExcel}
+            onUpload={(data) => addSalaryFromExcel(data, setSalaryHours)}
           />
         )}
       </Box>

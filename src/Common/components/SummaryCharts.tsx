@@ -10,7 +10,7 @@ function parseDDMMYYYY(dateStr: string): Date {
 }
 
 const SummaryCharts = () => {
-  const { fetchedBalanceEntries } = useBalanceEntry();
+  const { bEntries: fetchedBalanceEntries } = useBalanceEntry();
 
   const filteredData = (fetchedBalanceEntries ?? [])
     .filter((e) => e.status !== "inactive")

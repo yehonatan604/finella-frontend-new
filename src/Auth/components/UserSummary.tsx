@@ -10,7 +10,7 @@ import useBalanceEntry from "../../BalanceEntries/hooks/useBalanceEntry";
 const UserHomeSummary = () => {
   const { fetchedNotes } = useNote(true, true);
   const { fetchedToDos } = useToDo(true, true);
-  const { fetchedBalanceEntries } = useBalanceEntry();
+  const { bEntries: fetchedBalanceEntries } = useBalanceEntry();
 
   const unreadNotes =
     fetchedNotes?.filter((n) => n.noteStatus !== "READ" && n.status !== "inactive")
