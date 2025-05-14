@@ -6,7 +6,7 @@ This repository contains the frontend of Finella, built with **React**, **MUI**,
 
 ---
 
-## 🌐 Live Demo [Finella App (onRender)](https://finella-frontend.onrender.com/)
+## 🌐 Live Demo: [Finella App (onRender)](https://finella-frontend.onrender.com/)
 
 ---
 
@@ -22,7 +22,7 @@ This repository contains the frontend of Finella, built with **React**, **MUI**,
 
 ---
 
-## 🔐 Security & Authentication
+## Security & Authentication
 
 Finella includes built-in protections to keep your account secure:
 
