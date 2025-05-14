@@ -12,9 +12,9 @@ import useTheme from "../../Common/hooks/useTheme";
 import { pageSizeOptions } from "../../Common/helpers/paginationHelpers";
 import { TDataGridRow } from "../../Common/types/TDataGridRow";
 import ToDosChartsDialogDialog from "../components/ToDosChartsDialog";
-import SalariesPdfDoc from "../../Salaries/components/SalariesPdfDoc";
 import FormDialog from "../../Common/components/dialogs/FormDialog";
 import ToDoForm from "../forms/ToDo.form";
+import ToDosPdfDoc from "../components/ToDosPdfDoc";
 
 const ToDoPage = () => {
   const {
@@ -102,8 +102,9 @@ const ToDoPage = () => {
         <PageButtons
           fileName="ToDo"
           rows={rows}
-          Doc={SalariesPdfDoc}
+          Doc={ToDosPdfDoc}
           openCharts={() => setIsChartsDialogOpen(true)}
+          shouldPop={false}
         />
       )}
       <PlusButton onClick={() => setIsAddDialogOpen(true)} />

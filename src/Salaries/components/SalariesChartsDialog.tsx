@@ -67,10 +67,12 @@ const SalariesChartsDialog = ({ open, onClose, data }: SalariesChartsDialogProps
 
   const handleExportToPdf = async () => {
     if (!chartRef.current) return;
+    chartRef.current.classList.toggle("light-mode-export");
     const canvas = await html2canvas(chartRef.current, {
       backgroundColor: "#fff",
       scale: 2,
     });
+    chartRef.current.classList.toggle("light-mode-export");
     const dataUrl = canvas.toDataURL("image/png");
     setChartImage(dataUrl);
     setPdfReady(true);

@@ -21,3 +21,9 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.light-mode-export * {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  stroke: #000000 !important;
+}

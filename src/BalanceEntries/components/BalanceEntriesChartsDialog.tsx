@@ -65,8 +65,6 @@ const BalanceEntriesChartsDialog = ({
   const [chartImage, setChartImage] = useState<string | null>(null);
   const [pdfReady, setPdfReady] = useState(false);
 
-  console.log(incomingData);
-
   const data =
     incomingData?.sort(
       (a, b) =>
@@ -76,10 +74,14 @@ const BalanceEntriesChartsDialog = ({
 
   const handleExportToPdf = async () => {
     if (!chartRef.current) return;
+
+    chartRef.current.classList.toggle("light-mode-export");
     const canvas = await html2canvas(chartRef.current, {
-      backgroundColor: "#fff",
+      backgroundColor: "#ffffff",
       scale: 2,
     });
+    chartRef.current.classList.toggle("light-mode-export");
+
     const dataUrl = canvas.toDataURL("image/png");
     setChartImage(dataUrl);
     setPdfReady(true);
@@ -177,27 +179,21 @@ const BalanceEntriesChartsDialog = ({
       </DialogContent>
 
       <DialogActions>
-        {!pdfReady && (
+        {!pdfReady || !chartImage ? (
           <Button onClick={handleExportToPdf} color="primary" variant="contained">
             Prepare PDF
           </Button>
-        )}
-
-        {pdfReady && chartImage && (
+        ) : (
           <PDFDownloadLink
             document={<MyPDFDocument />}
             fileName="charts-report.pdf"
             style={{ textDecoration: "none" }}
           >
-            {({ loading }) =>
-              loading ? (
-                <Button variant="contained" disabled>
-                  Generating...
-                </Button>
-              ) : (
-                <Button variant="contained">Download PDF</Button>
-              )
-            }
+            {({ loading }) => (
+              <Button variant="contained" disabled={loading}>
+                {loading ? "Generating..." : "Download PDF"}
+              </Button>
+            )}
           </PDFDownloadLink>
         )}
 

@@ -12,10 +12,11 @@ type PageButtonsProps = {
   rows: Record<string, unknown>[];
   Doc: FC<{ rows: Record<string, unknown>[] }>;
   openCharts?: () => void;
+  shouldPop?: boolean;
 };
 
 const PageButtons = (props: PageButtonsProps) => {
-  const { fileName, rows, Doc, openCharts } = props;
+  const { fileName, rows, Doc, openCharts, shouldPop = true } = props;
   return (
     <Box sx={{ display: "flex", flexDirection: "row" }}>
       <Button
@@ -37,7 +38,7 @@ const PageButtons = (props: PageButtonsProps) => {
         startIcon={<PictureAsPdfIcon />}
         onClick={async () => {
           const data = [...rows];
-          data.pop();
+          shouldPop && data.pop();
           exportDataToPDF(<Doc rows={data} />, `${fileName}`);
         }}
       >
