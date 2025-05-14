@@ -16,7 +16,7 @@ export const exportDataToExcel = (
             alignment: { horizontal: "center", vertical: "center" },
             fill: {
                 patternType: "solid",
-                fgColor: { rgb: "DCE6F1" }, // Light blue
+                fgColor: { rgb: "DCE6F1" },
             },
             border: {
                 top: { style: "thin", color: { auto: 1 } },
@@ -39,7 +39,7 @@ export const exportDataToExcel = (
     if (maybeTotalRow !== -1) {
         keys.forEach((_, colIdx) => {
             const cellAddress = XLSX.utils.encode_cell({
-                r: maybeTotalRow + 1, // +1 because header row is row 0
+                r: maybeTotalRow + 1,
                 c: colIdx,
             });
             if (!ws[cellAddress]) return;
@@ -48,7 +48,7 @@ export const exportDataToExcel = (
                 font: { bold: true },
                 fill: {
                     patternType: "solid",
-                    fgColor: { rgb: "E8F5E9" }, // Light green
+                    fgColor: { rgb: "E8F5E9" },
                 },
             };
         });
