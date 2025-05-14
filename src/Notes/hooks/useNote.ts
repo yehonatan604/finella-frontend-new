@@ -253,6 +253,7 @@ const useNote = (isPage: boolean = false, all: boolean = false) => {
         onDelete,
         onUndelete,
         user,
+        getAllNotes,
     }
 }
 

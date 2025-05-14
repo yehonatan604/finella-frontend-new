@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent, useEffect } from "react";
 import { Box, Drawer, IconButton, Menu, MenuItem } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import { Link, useNavigate } from "react-router-dom";
@@ -42,7 +42,7 @@ const LeftNavigation = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { mode, setTheme } = useTheme();
   const { logout } = useAuth();
-  const { fetchedNotes } = useNote();
+  const { fetchedNotes, getAllNotes } = useNote();
   const isLeftNavOpen = useSelector(
     (state: TRootState) => state.themeSlice.isLeftNavOpen
   );
@@ -77,6 +77,12 @@ const LeftNavigation = () => {
 
   const iconColor = "#ccc";
   const sectionColor = "#bbb";
+
+  useEffect(() => {
+    if (!fetchedNotes || fetchedNotes.length === 0) {
+      getAllNotes("");
+    }
+  }, [fetchedNotes, getAllNotes]);
 
   return (
     <>
