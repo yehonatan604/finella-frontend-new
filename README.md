@@ -10,6 +10,12 @@ This repository contains the frontend of Finella, built with **React**, **MUI**,
 
 ---
 
+---
+
+## Backend Repository: [Finella Backend GitHub](https://github.com/yehonatan604/Finella-backend)
+
+---
+
 ## Features
 
 * **Salary & Finance Tracking** – Visualize income and salary breakdowns with charts.
@@ -64,7 +70,7 @@ npm install
 Create a `.env` file:
 
 ```env
-VITE_API_URL=https://your-backend-url.onrender.com
+VITE_API_URL=https://self-manager-backend.onrender.com
 ```
 
 > Make sure this matches your deployed backend or local server.
@@ -103,15 +109,12 @@ src/
 
 ---
 
-## Backend Repository: [Finella Backend GitHub](https://github.com/yehonatan604/Finella-backend)
-
 ---
 
 ## Deployment
 
 * Frontend is hosted on **Render**.
 * Compatible with static hosting (after `vite build`).
-* You can also package it into a **PWA** or **Electron** app.
 
 ---
 
