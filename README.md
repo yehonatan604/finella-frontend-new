@@ -64,7 +64,7 @@ npm install
 Create a `.env` file:
 
 ```env
-VITE_API_URL=https://your-backend-url.onrender.com
+VITE_API_URL=https://self-manager-backend.onrender.com
 ```
 
 > Make sure this matches your deployed backend or local server.
