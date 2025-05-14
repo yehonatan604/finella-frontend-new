@@ -88,17 +88,21 @@ npm run dev
 
 ## Project Structure
 
-```
+```bash
 src/
-├── Actions/        # Salary, Balance, ToDo logic
-├── Common/         # Reusable UI & hooks
-├── Notes/          # Note management logic
-├── Records/        # Financial records & charts
-├── ToDos/          # Task management
-├── Tools/          # Draggable utilities like Timer
-├── store/          # Redux setup
-├── App.tsx         # Main app router
-└── main.tsx        # Entry point
+├── Assets/          # Static assets like images or icons
+├── Auth/            # Authentication pages and logic
+├── BalanceEntries/  # Salary and income tracking
+├── Common/          # Reusable components, hooks, and utilities
+├── Core/            # App shell, store, routing logic
+├── Notes/           # Notes feature logic components and automation
+├── Salaries/        # Salary calculation and display logic
+├── Todos/           # To-do manager, components and hooks
+├── Tools/           # Floating tools like timer, clock, etc.
+├── Workplaces/      # Workplace management logic
+├── App.tsx          # Main app routing setup
+├── main.tsx         # React app entry point
+└── vite-env.d.ts    # Type declarations
 ```
 
 ---
