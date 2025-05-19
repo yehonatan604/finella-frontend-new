@@ -78,7 +78,7 @@ const ToDosChartsDialogDialog = ({ open, onClose, data }: ToDosChartsDialogProps
   );
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm" sx={{ left: "18vw" }}>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="md" sx={{ left: "18vw" }}>
       <DialogTitle
         sx={{
           backgroundColor: "primary.main",
