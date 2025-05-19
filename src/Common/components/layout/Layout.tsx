@@ -11,7 +11,7 @@ import { darkTheme } from "../../styles/themes/dark.theme";
 import { lightTheme } from "../../styles/themes/light.theme";
 import { CircularProgress } from "@mui/material";
 import Footer from "./Footer";
-import AbsTopIcons from "./AbsTopIcons";
+import TopNavigation from "./TopNavigation";
 import { useLocation } from "react-router-dom";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -29,8 +29,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <ThemeProvider theme={appliedTheme}>
-      {user && <LeftNavigation />}
-      {!user && <AbsTopIcons hideHome={location === "/"} />}
+      {user ? <LeftNavigation /> : <TopNavigation hideHome={location === "/"} />}
+
       <Box
         component={"main"}
         sx={{

@@ -5,7 +5,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import { useNavigate } from "react-router-dom";
 import useTheme from "../../hooks/useTheme";
 
-export const AbsTopIcons = ({ hideHome = false }: { hideHome?: boolean }) => {
+export const TopNavigation = ({ hideHome = false }: { hideHome?: boolean }) => {
   const { mode, setTheme } = useTheme();
   const nav = useNavigate();
 
@@ -37,4 +37,4 @@ export const AbsTopIcons = ({ hideHome = false }: { hideHome?: boolean }) => {
   );
 };
 
-export default AbsTopIcons;
+export default TopNavigation;
