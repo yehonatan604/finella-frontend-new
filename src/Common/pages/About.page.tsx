@@ -24,7 +24,7 @@ const AboutPage = () => {
         </Typography>
       </Box>
 
-      <Box sx={{ width: "50vw" }}>
+      <Box sx={{ width: "33vw" }}>
         <Section title="📝 Notes">
           <ul>
             <li>Create free-form notes for thoughts, ideas, or reminders.</li>
