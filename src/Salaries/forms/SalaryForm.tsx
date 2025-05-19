@@ -68,9 +68,6 @@ const SalaryForm = ({
     setIsDialogOpen(false);
   };
 
-  console.log(watch());
-  console.log(formMethods.formState.errors);
-
   return (
     <>
       <Box sx={{ p: 2, pb: 0 }}>
@@ -272,7 +269,19 @@ const SalaryForm = ({
                           variant="contained"
                           color="error"
                           size="small"
-                          onClick={() => removeSalaryHour(index, setSalaryHours)}
+                          onClick={() => {
+                            const hours = watch("hours");
+                            if (hours.length > 1) {
+                              setValue(
+                                "hours",
+                                hours.filter((_, i) => i !== index),
+                                {
+                                  shouldValidate: true,
+                                }
+                              );
+                            }
+                            removeSalaryHour(index, setSalaryHours);
+                          }}
                         >
                           -
                         </Button>
@@ -281,7 +290,19 @@ const SalaryForm = ({
                             variant="contained"
                             color="primary"
                             size="small"
-                            onClick={() => addNewSalaryHour(setSalaryHours)}
+                            onClick={() => {
+                              addNewSalaryHour(setSalaryHours);
+                              setValue(
+                                "hours",
+                                [
+                                  ...(salary ? watch("hours") : salaryHours),
+                                  { day: "", startTime: "", endTime: "", notes: "" },
+                                ],
+                                {
+                                  shouldValidate: true,
+                                }
+                              );
+                            }}
                           >
                             +
                           </Button>
