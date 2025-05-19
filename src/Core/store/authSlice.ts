@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RoleTypes } from "../../Auth/types/RoleTypes";
+import { RoleTypes } from "../../Auth/enums/RoleTypes";
 import { TUser } from "../../Auth/types/TUser";
 
 const initialState = {

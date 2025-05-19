@@ -87,7 +87,7 @@ const SalariesChartsDialog = ({ open, onClose, data }: SalariesChartsDialogProps
   );
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm" sx={{ left: "18vw" }}>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="md" sx={{ left: "18vw" }}>
       <DialogTitle
         sx={{
           backgroundColor: "primary.main",

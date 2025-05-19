@@ -164,6 +164,12 @@ const LeftNavigation = () => {
                 <MenuItem onClick={handleClose}>
                   <Link to={"/about"}>About</Link>
                 </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link to={"/terms"}>Terms</Link>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link to={"/help"}>Help</Link>
+                </MenuItem>
               </Menu>
 
               <IconButton onClick={() => setTheme(mode === "dark" ? "light" : "dark")}>

@@ -53,7 +53,7 @@ const AppRouter = () => {
       </Route>
 
       <Route path="/records" element={<RouteGuard isLoggedIn />}>
-        <Route index element={<SalariesPage />} />
+        <Route path="salaries" element={<SalariesPage />} />
         <Route path="balance-entries" element={<BalanceEntriesPage />} />
         <Route path="workplaces" element={<WorkplacesPage />} />
         <Route path="todos" element={<ToDoPage />} />

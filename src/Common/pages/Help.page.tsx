@@ -1,16 +1,32 @@
-import { Container, Typography, Paper, Divider, Link } from "@mui/material";
+import { Container, Typography, Paper, Divider, Link, Box } from "@mui/material";
+import ClickableImg from "../components/ClickableImg";
+import auth1Img from "../../Assets/images/help/auth-1.png";
+import auth2Img from "../../Assets/images/help/auth-2.png";
+import auth3Img from "../../Assets/images/help/auth-3.png";
+import note1Img from "../../Assets/images/help/notes-1.png";
+import note2Img from "../../Assets/images/help/notes-2.png";
+import note3Img from "../../Assets/images/help/notes-3.png";
+import todo1Img from "../../Assets/images/help/todos-1.png";
+import todo2Img from "../../Assets/images/help/todos-2.png";
+import todo3Img from "../../Assets/images/help/todos-3.png";
+import salary1Img from "../../Assets/images/help/salaries-1.png";
+import salary2Img from "../../Assets/images/help/salaries-2.png";
+import salary3Img from "../../Assets/images/help/salaries-3.png";
+import tool1Img from "../../Assets/images/help/tools-1.png";
+import tool2Img from "../../Assets/images/help/tools-2.png";
+import tool3Img from "../../Assets/images/help/tools-3.png";
 
 const HelpPage = () => {
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h4" gutterBottom>
-          🆘 Finella Help & Support
+          Help & Support
         </Typography>
 
         <Typography variant="body1" gutterBottom>
-          Welcome to Finella! This guide will walk you through the main features and how
-          to use them effectively.
+          This guide will walk you through the main features and how to use them
+          effectively.
         </Typography>
 
         <Divider sx={{ my: 3 }} />
@@ -28,6 +44,12 @@ const HelpPage = () => {
           receive a reset link via email.
         </Typography>
 
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+          <ClickableImg imgSrc={auth1Img} alt="Authentication Step 1" />
+          <ClickableImg imgSrc={auth2Img} alt="Authentication Step 2" />
+          <ClickableImg imgSrc={auth3Img} alt="Authentication Step 3" />
+        </Box>
+
         <Divider sx={{ my: 3 }} />
 
         {/* Notes */}
@@ -40,6 +62,12 @@ const HelpPage = () => {
           - Use the sticky option to highlight important notes.
           <br />- Real-time alerts will notify you when automations trigger a note.
         </Typography>
+
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+          <ClickableImg imgSrc={note1Img} alt="Notes" />
+          <ClickableImg imgSrc={note2Img} alt="Note Board" />
+          <ClickableImg imgSrc={note3Img} alt="Note Automation" />
+        </Box>
 
         <Divider sx={{ my: 3 }} />
 
@@ -54,6 +82,12 @@ const HelpPage = () => {
           <br />- When an unfinished task passes the due date, it becomes a note and
           triggers a socket alert.
         </Typography>
+
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+          <ClickableImg imgSrc={todo1Img} alt="ToDos" />
+          <ClickableImg imgSrc={todo2Img} alt="ToDos Board" />
+          <ClickableImg imgSrc={todo3Img} alt="ToDo Form" />
+        </Box>
 
         <Divider sx={{ my: 3 }} />
 
@@ -71,6 +105,12 @@ const HelpPage = () => {
           <em>Add screenshot of salary chart and export buttons here 📸</em>
         </Typography>
 
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+          <ClickableImg imgSrc={salary1Img} alt="Salaries" />
+          <ClickableImg imgSrc={salary2Img} alt="Salaries Charts" />
+          <ClickableImg imgSrc={salary3Img} alt="Salaries Form" />
+        </Box>
+
         <Divider sx={{ my: 3 }} />
 
         {/* Tools */}
@@ -83,6 +123,12 @@ const HelpPage = () => {
           - The Timer runs even when minimized.
           <br />- New tools can be added in future versions.
         </Typography>
+
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+          <ClickableImg imgSrc={tool1Img} alt="Tools demo 1" />
+          <ClickableImg imgSrc={tool2Img} alt="Tools demo 2" />
+          <ClickableImg imgSrc={tool3Img} alt="Tools demo 3" />
+        </Box>
 
         <Divider sx={{ my: 3 }} />
 

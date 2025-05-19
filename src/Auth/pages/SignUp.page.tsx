@@ -49,10 +49,10 @@ const SignUpPage = () => {
       }}
     >
       <Container
-        maxWidth="xs"
+        maxWidth="md"
         sx={{
           backdropFilter: "blur(10px)",
-          backgroundColor: "rgba(0, 0, 0, 0.6)",
+          backgroundColor: "background.paper",
           borderRadius: 3,
           p: 4,
           textAlign: "center",
