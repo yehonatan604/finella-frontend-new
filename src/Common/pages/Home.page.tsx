@@ -36,7 +36,6 @@ const HomePage = () => {
                 filter: "drop-shadow(0 0 6px rgba(255,255,255,0.5))",
               }}
             />
-
             <Typography variant="h3" fontWeight={700} gutterBottom>
               Welcome to Finella
             </Typography>
@@ -48,7 +47,6 @@ const HomePage = () => {
               Your personal management platform for organizing tasks, automating notes,
               and tracking your financial growth.
             </Typography>
-
             <Stack
               direction="row"
               spacing={3}
@@ -78,7 +76,6 @@ const HomePage = () => {
                 description="Your data stays yours — encrypted and protected."
               />
             </Stack>
-
             <Box
               sx={{
                 display: "flex",

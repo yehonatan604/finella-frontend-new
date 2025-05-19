@@ -10,12 +10,14 @@ import { AxiosError } from "axios";
 import useSocket from "../../Common/hooks/useSocket";
 import { TUser } from "../types/TUser";
 import { TChangePassword } from "../types/TChangePassword";
+import { useNavigate } from "react-router-dom";
 
 const useAuth = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const { user, role } = useSelector((state: TRootState) => state.authSlice);
     const { POST, GET, PUT, PATCH } = HTTPMethodTypes;
     const dispatch = useDispatch();
+    const nav = useNavigate();
     useSocket(user!);
 
     const signup = useCallback(async (data: Record<string, unknown>) => {
@@ -41,9 +43,10 @@ const useAuth = () => {
     }, [POST]);
 
     const logout = useCallback(() => {
+        nav("/");
         dispatch(authActions.logout());
         localStorage.removeItem("token");
-    }, [dispatch])
+    }, [dispatch, nav]);
 
     const login = useCallback(async (data: Record<string, unknown>) => {
         setLoading(true);
@@ -79,6 +82,7 @@ const useAuth = () => {
         } catch (err) {
             const error = err as Error;
             console.log(error);
+            toastify.error("Token expired, please login.");
             logout();
         } finally {
             setLoading(false);

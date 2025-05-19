@@ -66,8 +66,8 @@ const LeftNavigation = () => {
   };
 
   const handleLogout = () => {
-    logout();
     handleClose();
+    logout();
   };
 
   const gradientBackground =

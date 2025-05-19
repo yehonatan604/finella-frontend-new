@@ -9,10 +9,11 @@ import useAuth from "../../../Auth/hooks/useAuth";
 import { TTheme } from "../../types/TTheme";
 import { darkTheme } from "../../styles/themes/dark.theme";
 import { lightTheme } from "../../styles/themes/light.theme";
+import { CircularProgress } from "@mui/material";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const { mode, setTheme } = useTheme();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
   const appliedTheme = createTheme(mode === "dark" ? darkTheme : lightTheme);
 
@@ -41,6 +42,19 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       >
         {children}
       </Box>
+      {!user && loading && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            mt: 2,
+          }}
+        >
+          <CircularProgress size={50} />
+        </Box>
+      )}
     </ThemeProvider>
   );
 };
