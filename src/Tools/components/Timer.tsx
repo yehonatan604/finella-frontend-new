@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { formatTime } from "../../Common/helpers/dateTimeHelpers";
 import { timerStore } from "../helpers/TimerStore";
+import { alert } from "../../Common/utilities/alert";
 
 const Timer = () => {
   const [displayTime, setDisplayTime] = useState(timerStore.getDisplayTime());
@@ -30,7 +31,7 @@ const Timer = () => {
       setModeTimer(mode);
     });
 
-    timerStore.setOnTimeout(() => alert("⏰ Time's up!"));
+    timerStore.setOnTimeout(() => alert("Time's up!", ""));
 
     return unsubscribe;
   }, []);
