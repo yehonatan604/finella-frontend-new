@@ -18,6 +18,8 @@ import BalanceEntriesPage from "../../BalanceEntries/pages/BalanceEntries.page";
 import ProfilePage from "../../Auth/pages/Profile.page";
 import ChangePasswordPage from "../../Auth/pages/ChangePassword.page";
 import ForgotPasswordPage from "../../Auth/pages/ForgotPassword.page";
+import ErrorPage from "../../Common/pages/Error.page";
+import SubMain from "../../Common/components/layout/SubMain";
 
 const AppRouter = () => {
   const { loginByToken } = useAuth();
@@ -64,6 +66,15 @@ const AppRouter = () => {
         <Route index element={<ToDoPage />} />
         <Route path="board" element={<TodosBoard />} />
       </Route>
+
+      <Route
+        path="/*"
+        element={
+          <SubMain>
+            <ErrorPage />
+          </SubMain>
+        }
+      />
     </Routes>
   );
 };
