@@ -59,7 +59,7 @@ const useAuth = () => {
             console.log(error);
             await alert(
                 "Login Failed",
-                error?.response?.data + "",
+                error?.response?.data + (error.response?.data === "Too many login attempts" ? ", Please check your email." : ""),
                 "error",
             );
         } finally {
