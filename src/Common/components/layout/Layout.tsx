@@ -10,6 +10,7 @@ import { TTheme } from "../../types/TTheme";
 import { darkTheme } from "../../styles/themes/dark.theme";
 import { lightTheme } from "../../styles/themes/light.theme";
 import { CircularProgress } from "@mui/material";
+import Footer from "./Footer";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const { mode, setTheme } = useTheme();
@@ -41,6 +42,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         }}
       >
         {children}
+        {!user && <Footer />}
       </Box>
       {!user && loading && (
         <Box

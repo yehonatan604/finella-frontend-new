@@ -10,10 +10,6 @@ const AboutPage = () => {
       sx={{
         mb: 10,
         color: "text.primary",
-        overflow: "auto",
-        maxHeight: "100vh",
-        width: user ? "85vw" : "100vw",
-        px: 20,
         py: 3,
         display: "flex",
         flexDirection: "column",
