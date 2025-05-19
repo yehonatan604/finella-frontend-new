@@ -1,10 +1,7 @@
 import { ReactNode } from "react";
 import { Box, Typography } from "@mui/material";
-import useAuth from "../../Auth/hooks/useAuth";
-import AbsTopIcons from "../components/layout/AbsTopIcons";
 
 const AboutPage = () => {
-  const { user } = useAuth();
   return (
     <Box
       sx={{
@@ -16,7 +13,6 @@ const AboutPage = () => {
         alignItems: "center",
       }}
     >
-      {!user && <AbsTopIcons />}
       <Box sx={{ mb: 4, textAlign: "center" }}>
         <Typography variant="h3" fontWeight="bold" gutterBottom>
           About Finella

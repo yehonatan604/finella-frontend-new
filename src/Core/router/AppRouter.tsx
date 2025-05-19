@@ -19,7 +19,6 @@ import ProfilePage from "../../Auth/pages/Profile.page";
 import ChangePasswordPage from "../../Auth/pages/ChangePassword.page";
 import ForgotPasswordPage from "../../Auth/pages/ForgotPassword.page";
 import ErrorPage from "../../Common/pages/Error.page";
-import SubMain from "../../Common/components/layout/SubMain";
 
 const AppRouter = () => {
   const { loginByToken } = useAuth();
@@ -50,7 +49,7 @@ const AppRouter = () => {
       </Route>
 
       <Route path="/records" element={<RouteGuard isLoggedIn />}>
-        <Route path="salaries" index element={<SalariesPage />} />
+        <Route index element={<SalariesPage />} />
         <Route path="balance-entries" element={<BalanceEntriesPage />} />
         <Route path="workplaces" element={<WorkplacesPage />} />
         <Route path="todos" element={<ToDoPage />} />
@@ -67,14 +66,7 @@ const AppRouter = () => {
         <Route path="board" element={<TodosBoard />} />
       </Route>
 
-      <Route
-        path="/*"
-        element={
-          <SubMain>
-            <ErrorPage />
-          </SubMain>
-        }
-      />
+      <Route path="/*" element={<ErrorPage />} />
     </Routes>
   );
 };

@@ -13,7 +13,6 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { loginFormDefault } from "../forms/loginFormDefault";
-import AbsTopIcons from "../../Common/components/layout/AbsTopIcons";
 import FormValidationMessage from "../../Common/components/form/FormValidationMessage";
 
 const LoginPage = () => {
@@ -43,7 +42,6 @@ const LoginPage = () => {
         justifyContent: "center",
       }}
     >
-      <AbsTopIcons />
       <Container
         maxWidth="md"
         sx={{

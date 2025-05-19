@@ -6,7 +6,6 @@ import FeatureBox from "../components/FeatureBox";
 import useTheme from "../hooks/useTheme";
 import UserSummary from "../../Auth/components/UserSummary";
 import SummaryCharts from "../components/SummaryCharts";
-import AbsTopIcons from "../components/layout/AbsTopIcons";
 import logoNavy from "../../Assets/images/logo-big-navy.png";
 import logoWhite from "../../Assets/images/logo-big-white.png";
 
@@ -17,7 +16,6 @@ const HomePage = () => {
 
   return !user ? (
     <>
-      <AbsTopIcons hideHome />
       <Fade in timeout={1000}>
         <Box
           sx={{

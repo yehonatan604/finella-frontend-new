@@ -13,7 +13,6 @@ import { signupSchema } from "../validations/signup.schema";
 import { Link, useNavigate } from "react-router-dom";
 import { signupFormDefault } from "../forms/signupFormDefault";
 import useTheme from "../../Common/hooks/useTheme";
-import AbsTopIcons from "../../Common/components/layout/AbsTopIcons";
 import FormValidationMessage from "../../Common/components/form/FormValidationMessage";
 
 const SignUpPage = () => {
@@ -49,7 +48,6 @@ const SignUpPage = () => {
         backgroundPosition: "center",
       }}
     >
-      <AbsTopIcons />
       <Container
         maxWidth="xs"
         sx={{
