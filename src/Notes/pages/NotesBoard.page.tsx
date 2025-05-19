@@ -5,7 +5,7 @@ import useTheme from "../../Common/hooks/useTheme";
 import FormDialog from "../../Common/components/dialogs/FormDialog";
 import NoteForm from "../forms/Note.form";
 import { useState } from "react";
-import PlusButton from "../../Common/components/layout/PlusButton";
+import PlusButton from "../../Common/components/PlusButton";
 import ShowInactiveCheckbox from "../../Common/components/ShowInactiveCheckbox";
 import NoteCard from "../components/NoteCard";
 

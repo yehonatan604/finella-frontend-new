@@ -5,6 +5,9 @@ import { TTheme } from "../types/TTheme";
 
 const useTheme = () => {
     const theme = useSelector<TRootState, TThemState>((state) => state.themeSlice);
+    const isLeftNavOpen = useSelector<TRootState, boolean>(
+        (state) => state.themeSlice.isLeftNavOpen
+    );
     const mode = theme.mode as TTheme;
     const dispatch = useDispatch();
 
@@ -13,7 +16,7 @@ const useTheme = () => {
         localStorage.setItem("mode", mode);
     };
 
-    return { mode, setTheme };
+    return { mode, setTheme, isLeftNavOpen };
 }
 
 export default useTheme;

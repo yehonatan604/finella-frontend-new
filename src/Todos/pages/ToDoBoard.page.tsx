@@ -8,7 +8,7 @@ import { TTaskStastus } from "../../Common/types/TTaskStatus";
 import { TToDo } from "../types/TToDo";
 import ShowInactiveCheckbox from "../../Common/components/ShowInactiveCheckbox";
 import ToDoCard from "../components/ToDoCard";
-import PlusButton from "../../Common/components/layout/PlusButton";
+import PlusButton from "../../Common/components/PlusButton";
 import FormDialog from "../../Common/components/dialogs/FormDialog";
 import ToDoForm from "../forms/ToDo.form";
 

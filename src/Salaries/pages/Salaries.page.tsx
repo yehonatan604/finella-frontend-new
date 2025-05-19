@@ -5,7 +5,7 @@ import Page from "../../Common/components/layout/Page";
 import SalariesPdfDoc from "../components/SalariesPdfDoc";
 import PageFilters from "../../Common/components/layout/PageFilters";
 import PageButtons from "../../Common/components/layout/PageButtons";
-import PlusButton from "../../Common/components/layout/PlusButton";
+import PlusButton from "../../Common/components/PlusButton";
 import ShowInactiveCheckbox from "../../Common/components/ShowInactiveCheckbox";
 import { useState } from "react";
 import StyledDataGrid from "../../Common/components/styled/StyledDataGrid";

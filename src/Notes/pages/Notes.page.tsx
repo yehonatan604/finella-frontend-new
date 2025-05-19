@@ -3,7 +3,7 @@ import { Box, Paper } from "@mui/material";
 import Page from "../../Common/components/layout/Page";
 import PageButtons from "../../Common/components/layout/PageButtons";
 import PageFilters from "../../Common/components/layout/PageFilters";
-import PlusButton from "../../Common/components/layout/PlusButton";
+import PlusButton from "../../Common/components/PlusButton";
 import ShowInactiveCheckbox from "../../Common/components/ShowInactiveCheckbox";
 import useNote from "../hooks/useNote";
 import FormDialog from "../../Common/components/dialogs/FormDialog";

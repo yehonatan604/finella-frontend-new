@@ -5,7 +5,7 @@ import BalanceEnetriesPdfDoc from "../components/BalanceEnetriesPdfDoc";
 import useBalanceEntry from "../hooks/useBalanceEntry";
 import PageButtons from "../../Common/components/layout/PageButtons";
 import PageFilters from "../../Common/components/layout/PageFilters";
-import PlusButton from "../../Common/components/layout/PlusButton";
+import PlusButton from "../../Common/components/PlusButton";
 import ShowInactiveCheckbox from "../../Common/components/ShowInactiveCheckbox";
 import { useState } from "react";
 import BalanceEntriesChartsDialog from "../components/BalanceEntriesChartsDialog";

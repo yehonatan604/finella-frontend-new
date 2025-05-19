@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
+import useTheme from "../hooks/useTheme";
 
 const PlusButton = ({
   addUrl = "",
@@ -9,7 +10,9 @@ const PlusButton = ({
   addUrl?: string;
   onClick?: () => void;
 }) => {
+  const { isLeftNavOpen } = useTheme();
   const nav = useNavigate();
+
   return (
     <Button
       variant="contained"
@@ -29,8 +32,9 @@ const PlusButton = ({
         padding: 0.5,
         fontSize: "4rem",
         position: "fixed",
-        right: "3vw",
+        right: isLeftNavOpen ? "3vw" : "12vw",
         bottom: "10vh",
+        transition: "right 0.5s ease-in-out",
       }}
     >
       <AddIcon sx={{ fontSize: "inherit" }} />
