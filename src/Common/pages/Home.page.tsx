@@ -21,7 +21,6 @@ const HomePage = () => {
       <Fade in timeout={1000}>
         <Box
           sx={{
-            minHeight: "100vh",
             display: "flex",
             alignItems: "start",
             justifyContent: "start",

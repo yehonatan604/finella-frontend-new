@@ -25,8 +25,6 @@ const Page = ({
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          width: "85vw",
-          maxHeight: "80vh",
         }}
       >
         {children}

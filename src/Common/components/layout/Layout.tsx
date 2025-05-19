@@ -24,24 +24,22 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <ThemeProvider theme={appliedTheme}>
-      <Box sx={{ height: "100vh" }}>
-        {user && <LeftNavigation />}
-        <Box
-          component={"main"}
-          sx={{
-            "*": {
-              transition: "all 0.5s ease, color 0.5s ease",
-            },
-            flexGrow: 1,
-            backgroundColor: mode === "light" ? blue[50] : "#0f172a",
-            py: 0,
-            px: 3,
-            height: "100vh",
-            overflow: "hidden",
-          }}
-        >
-          {children}
-        </Box>
+      {user && <LeftNavigation />}
+      <Box
+        component={"main"}
+        sx={{
+          "*": {
+            transition: "all 0.5s ease, color 0.5s ease",
+          },
+          backgroundColor: mode === "light" ? blue[50] : "#0f172a",
+          pt: user ? 4 : 0,
+          pb: 2,
+          px: 3,
+          height: "100vh",
+          overflow: "auto",
+        }}
+      >
+        {children}
       </Box>
     </ThemeProvider>
   );
