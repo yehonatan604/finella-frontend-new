@@ -182,11 +182,10 @@ Contributions, issues, and feature requests are welcome!
 
 ## License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+This project is licensed under the MIT License.
 
 ---
 
 ## Author
 
-Developed by [Yehonatan Moravia](https://github.com/yehonatan604).
-Enjoy!
+Developed by [Yehonatan Moravia](https://github.com/yehonatan604)
